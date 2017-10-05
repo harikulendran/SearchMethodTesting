@@ -8,17 +8,26 @@ using namespace std;
 class Node;
 class Edge;
 
-bool operator== (const Node& lhs, const Node& rhs) {
-	return (lhs.index == rhs.index);
-}
-bool operator!= (const Node& lhs, const Node& rhs) {
-	return !(lhs == rhs);
-}
+class Edge {
+	public:
+		int index;
+		Node* n1;
+		Node* n2;
+
+	public:
+		Edge(int i, Node& node1, Node& node2) : index(i), n1(&node1), n2(&node2) {}
+};
 
 class Node {
 	public:
 		int index;
 		vector<Edge> edges;
+		bool operator==(const Node& rhs) {
+			return (this->index == rhs.index);
+		}
+		bool operator!=(const Node& rhs) {
+			return !(*this == rhs);
+		}
 	
 	public:
 		Node(int i) : index(i) {}
@@ -28,17 +37,6 @@ class Node {
 				n.addEdge(*this);
 			}
 		}
-};
-
-
-class Edge {
-	public:
-		int index;
-		Node* n1;
-		Node* n2;
-
-	public:
-		Edge(int i, Node& node1, Node& node2) : index(i), n1(&node1), n2(&node2) {}
 };
 
 class Graph{
@@ -78,8 +76,3 @@ class Graph{
 			return g;
 		}
 };
-
-int main() {
-	Graph graph = Graph::getRandomGraph(6,0);
-	return 0;
-}

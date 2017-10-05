@@ -4,8 +4,8 @@
 #include "stdafx.h"
 
 
-int main()
-{
-    return 0;
-}
 
+int main() {
+	Graph graph = Graph::getRandomGraph(6,0);
+	return 0;
+}
