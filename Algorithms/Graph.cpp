@@ -41,11 +41,40 @@ class Edge {
 
 class Graph{
 	public:
-		Node* root;
+		Node root;
+		vector<Node> nodes;
+
+		
 
 	public:
-		Graph() : root(new Node(0)) {}
+		Graph() : root(*new Node(0)) {}
+		
+		void addNode(Node& n) {
+			nodes.push_back(n);
+		}
+		Node getNode(int i) {
+			return nodes.at(i);
+		}
+		int nodeSize() {
+			return nodes.size();
+		}
 
+		static Graph getRandomGraph(int n, int p) {
+			Graph* g = new Graph();
+			
+			g.addNode(g.root);
+			for (int i = 1; i < n; i++)
+				g.addNode(*new Node(i));
+
+			int index2 = 0;
+			for (int i = 0; i < g.nodeSize(); i++) {
+				for (int j = index2; j < g.nodeSize(); j++)
+					if (i != j)
+						g.getNode(i).addEdge(g.getNode(j));
+				index2++;
+			}
+
+		}
 
 
 };
