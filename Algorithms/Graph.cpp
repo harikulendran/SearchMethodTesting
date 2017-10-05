@@ -16,14 +16,15 @@ bool operator!= (const Node& lhs, const Node& rhs) {
 class Node {
 	public:
 		int index;
-		vector<Edge*> edges;
+		vector<Edge> edges;
 	
 	public:
 		Node(int i) : index(i) {}
 		void addEdge(Node n) {
-			if (*this != n)
-				edges.push_back(new Edge(1, *this, n));
-
+			if (*this != n) {
+				edges.push_back(*new Edge(1, *this, n));
+				n.addEdge(*this);
+			}
 		}
 };
 
@@ -38,8 +39,13 @@ class Edge {
 		Edge(int i, Node& node1, Node& node2) : index(i), n1(node1), n2(node2) {}
 };
 
-class Tree {
-	
+class Graph{
+	public:
+		Node* root;
+
+	public:
+		Graph() : root(new Node(0)) {}
+
 
 
 };
