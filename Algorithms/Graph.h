@@ -18,20 +18,24 @@ class Edge {
 class Node {
 	public:
 		int index;
-		vector<Edge> edges;
+		vector<Edge*>* edges;
 		bool operator==(const Node& rhs);
 		bool operator!=(const Node& rhs);
 		Node(int i);
+		~Node();
 		void addEdge(Node n);
+		int edgeSize();
 };
 
 class Graph {
 	public:
-		Node root;
-		vector<Node> nodes;
+		Node* root;
+		vector<Node*> nodes;
 		Graph();
-		void addNode(Node& n);
+		~Graph();
+		void addNode(Node* n);
 		Node getNode(int i);
 		int nodeSize();
+		int edgeSize();
 		static Graph getRandomGraph(int n, int p);
 };
