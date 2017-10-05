@@ -1,3 +1,5 @@
+
+#include "stdafx.h"
 #include <iostream>
 #include <vector>
 
@@ -32,11 +34,11 @@ class Node {
 class Edge {
 	public:
 		int index;
-		Node n1;
-		Node n2;
+		Node* n1;
+		Node* n2;
 
 	public:
-		Edge(int i, Node& node1, Node& node2) : index(i), n1(node1), n2(node2) {}
+		Edge(int i, Node& node1, Node& node2) : index(i), n1(&node1), n2(&node2) {}
 };
 
 class Graph{
@@ -60,7 +62,7 @@ class Graph{
 		}
 
 		static Graph getRandomGraph(int n, int p) {
-			Graph* g = new Graph();
+			Graph g = *new Graph();
 			
 			g.addNode(g.root);
 			for (int i = 1; i < n; i++)
@@ -73,8 +75,11 @@ class Graph{
 						g.getNode(i).addEdge(g.getNode(j));
 				index2++;
 			}
-
+			return g;
 		}
-
-
 };
+
+int main() {
+	Graph graph = Graph::getRandomGraph(6,0);
+	return 0;
+}
