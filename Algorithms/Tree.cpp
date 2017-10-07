@@ -7,7 +7,7 @@
 using namespace std;
 
 //Edge
-Edge::Edge(int i, shared_ptr<Node> node1) : index(i), n1(node1) {}
+Edge::Edge(int i, Direction d, shared_ptr<Node> node1) : index(i), dir(d), n1(node1) {}
 
 //Node
 bool Node::operator==(const shared_ptr<Node> rhs) {
@@ -16,28 +16,32 @@ bool Node::operator==(const shared_ptr<Node> rhs) {
 bool Node::operator!=(const shared_ptr<Node> rhs) {
 	return !(*this == rhs);
 }
-Node::Node(int i) : index(i) {}
+Node::Node(int i, int d) : index(i), depth(d) {}
 Node::~Node() {
 	//for (Edge* e : *edges)
 		//delete e;
 	//delete edges;
 }
-void Node::addEdge(shared_ptr<Node> n) {
+void Node::addEdge(shared_ptr<Node> n, Direction d) {
 	if (*this != n) {
-		Edge e(edges.size(), n);
+		Edge e(edges.size(), d, n);
 		edges.emplace_back(e);
 		cout << index << " - " << &edges << ": " << edges.size() << endl;
-		//n.addEdge(*this);
+		//edges.emplace_v
 	}
 }
 int Node::edgeSize() {
 	return edges.size();
 }
 
-Tree::Tree() : root(new Node(0)) {}
+Tree::Tree() {
+	addNode(0,0);
+	root = getSNode(0);
+	currentNode = root;
+}
 		
-void Tree::addNode(int i) {
-	nodes.push_back(make_shared<Node>(i));
+void Tree::addNode(int i, int d) {
+	nodes.push_back(make_shared<Node>(i,d));
 }
 Node& Tree::getNode(int i) {
 	return *(nodes.at(i));
@@ -59,7 +63,7 @@ Tree Tree::getRandomTree(int n, int p) {
 	Tree t{};
 	
 	for (int i = 0; i < n; i++)
-		t.addNode(i);
+		t.addNode(i,0);
 
 	t.root = t.nodes.at(0);
 
@@ -67,7 +71,7 @@ Tree Tree::getRandomTree(int n, int p) {
 	for (int i = 0; i < t.nodeSize(); i++) {
 		for (int j = index2; j < t.nodeSize(); j++)
 			if (i != j)
-				(t.getSNode(i))->addEdge(t.getSNode(j));
+				(t.getSNode(i))->addEdge(t.getSNode(j), Direction::NA);
 		index2++;
 	}
 	cout << endl << "inside edgesize " << t.edgeSize() << endl;
