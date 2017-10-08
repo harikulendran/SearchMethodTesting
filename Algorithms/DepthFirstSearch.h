@@ -10,8 +10,8 @@ using namespace std;
 class DepthFirstSearch {
 	public:
 		vector<int> visitedNodes;
-		BlocksWorldBoard bwBoard;
-		Tree tree{};
+		BlocksWorldBoard bwBoard{};
+		Tree tree;
 		int count = 1;
 		DepthFirstSearch();
 		bool next();

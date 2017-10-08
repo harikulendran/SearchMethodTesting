@@ -25,7 +25,7 @@ class Node {
 		bool operator==(const shared_ptr<Node> rhs);
 		bool operator!=(const shared_ptr<Node> rhs);
 		Node(int i, int d);
-		~Node();
+		//~Node();
 		void addEdge(shared_ptr<Node> n, Direction d);
 		int edgeSize();
 };

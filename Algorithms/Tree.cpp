@@ -17,16 +17,11 @@ bool Node::operator!=(const shared_ptr<Node> rhs) {
 	return !(*this == rhs);
 }
 Node::Node(int i, int d) : index(i), depth(d) {}
-Node::~Node() {
-	//for (Edge* e : *edges)
-		//delete e;
-	//delete edges;
-}
 void Node::addEdge(shared_ptr<Node> n, Direction d) {
 	if (*this != n) {
 		Edge e(edges.size(), d, n);
 		edges.emplace_back(e);
-		cout << index << " - " << &edges << ": " << edges.size() << endl;
+		//cout << index << " - " << &edges << ": " << edges.size() << endl;
 		//edges.emplace_v
 	}
 }

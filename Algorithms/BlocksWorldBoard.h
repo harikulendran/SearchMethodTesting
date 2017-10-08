@@ -10,10 +10,11 @@ const static int BOARD_SIZE = 4;
 
 enum class Direction { LEFT, RIGHT, UP, DOWN, NA };
 
-struct Coord {
-	int x;
-	int y;
-	Coord(int a, int b);
+class Coord {
+	public:
+		int x;
+		int y;
+		Coord(int acoord, int bcoord);
 };
 
 class BlocksWorldBoard {
@@ -28,5 +29,5 @@ class BlocksWorldBoard {
 	private:
 		int board[BOARD_SIZE][BOARD_SIZE] = { 0 };
 		map<Direction, Coord> moves;
-		Coord agent;
+		Coord agent{ 3,3 };
 };

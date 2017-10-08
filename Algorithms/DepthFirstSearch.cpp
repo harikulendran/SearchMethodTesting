@@ -2,9 +2,10 @@
 
 #include "DepthFirstSearch.h"
 #include "stdlib.h"
+#include "time.h"
 
 DepthFirstSearch::DepthFirstSearch() {
-
+	srand(time(NULL));
 }
 
 void DepthFirstSearch::search() {
@@ -30,23 +31,31 @@ bool DepthFirstSearch::next() {
 		}
 
 	count++;
+	cout << count << endl;
 	int selected = rand() % vm;
 	vm = 0;
-	Direction dir;
+	Direction dir(Direction::NA);
 
 	for (auto const& x : bwBoard.validMoves)
 		if (x.second) {
-			vm++;
-			if (vm == selected)
+			if (vm == selected) {
 				dir = x.first;
+				break;
+			}
+			vm++;
 		}
 	
-	for (Edge e : tree.currentNode->edges)
+	for (Edge e : tree.currentNode->edges) {
 		if (e.dir == dir) {
 			tree.currentNode = e.n1;
 			visitedNodes.push_back(e.index);
 			bwBoard.move(e.dir);
+			break;
 		}
+	}
+
+	if (count == 500)
+		return true;
 
 	return (bwBoard.isSolved());
 }

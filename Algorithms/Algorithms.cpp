@@ -11,4 +11,5 @@ using namespace std;
 int main() {
 	DepthFirstSearch d{};
 	d.search();
+	return 0;
 }
