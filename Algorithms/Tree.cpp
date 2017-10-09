@@ -7,20 +7,20 @@
 using namespace std;
 
 //Edge
-Edge::Edge(int i, Direction d, shared_ptr<Node> node1) : index(i), dir(d), n1(node1) {}
+Edge::Edge(int i, Direction d, Node* node1) : index(i), dir(d), n1(node1) {}
 
 //Node
-bool Node::operator==(const shared_ptr<Node> rhs) {
+bool Node::operator==(const Node* rhs) {
 	return (this->index == rhs->index);
 }
-bool Node::operator!=(const shared_ptr<Node> rhs) {
+bool Node::operator!=(const Node* rhs) {
 	return !(*this == rhs);
 }
 Node::Node(int i, int d) : index(i), depth(d) {}
-void Node::addEdge(shared_ptr<Node> n, Direction d) {
+
+void Node::addEdge(Node* n, Direction d) {
 	if (*this != n) {
-		Edge e(edges.size(), d, n);
-		edges.emplace_back(e);
+		edges.emplace_back(Edge(edges.size(), d, n));
 		//cout << index << " - " << &edges << ": " << edges.size() << endl;
 		//edges.emplace_v
 	}
@@ -31,25 +31,25 @@ int Node::edgeSize() {
 
 Tree::Tree() {
 	addNode(0,0);
-	root = getSNode(0);
+	root = getNode(0);
 	currentNode = root;
 }
 		
 void Tree::addNode(int i, int d) {
-	nodes.push_back(make_shared<Node>(i,d));
+	nodes.emplace_back(new Node(i,d));
 }
-Node& Tree::getNode(int i) {
-	return *(nodes.at(i));
+Node* Tree::getNode(int i) {
+	return (nodes.at(i));
 }
-shared_ptr<Node> Tree::getSNode(int i) {
+/*shared_ptr<Node> Tree::getSNode(int i) {
 	return nodes.at(i);
-}
+}*/
 int Tree::nodeSize() {
 	return nodes.size();
 }
 int Tree::edgeSize() {
 	int sum = 0;
-	for (shared_ptr<Node> n : nodes)
+	for (Node* n : nodes)
 		sum += n->edgeSize();
 	return sum;
 }
@@ -66,12 +66,12 @@ Tree Tree::getRandomTree(int n, int p) {
 	for (int i = 0; i < t.nodeSize(); i++) {
 		for (int j = index2; j < t.nodeSize(); j++)
 			if (i != j)
-				(t.getSNode(i))->addEdge(t.getSNode(j), Direction::NA);
+				(t.getNode(i))->addEdge(t.getNode(j), Direction::NA);
 		index2++;
 	}
-	cout << endl << "inside edgesize " << t.edgeSize() << endl;
+	/*cout << endl << "inside edgesize " << t.edgeSize() << endl;
 	cout << "inside index " << t.root->index << endl;
 	for (Edge pi : (t.nodes)[0]->edges)
-		cout << "in root edges: " << pi.index << endl;
+		cout << "in root edges: " << pi.index << endl;*/
 	return t;
 }

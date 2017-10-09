@@ -6,13 +6,14 @@
 
 DepthFirstSearch::DepthFirstSearch() {
 	srand(time(NULL));
+	tree = make_shared<Tree>();
 }
 
 void DepthFirstSearch::search() {
 	while (!next()) {}
 	cout << "Depth reached: " << count << endl;
-	cout << "Number of nodes in memory: " << tree.nodeSize() << endl;
-	cout << "Number of edges in memory: " << tree.edgeSize() << endl;
+	cout << "Number of nodes in memory: " << tree->nodeSize() << endl;
+	cout << "Number of edges in memory: " << tree->edgeSize() << endl;
 	cout << "Final board: " << endl;
 	bwBoard.print();
 	int qqq;
@@ -25,9 +26,9 @@ bool DepthFirstSearch::next() {
 	for (auto const& x : bwBoard.validMoves)
 		if (x.second) {
 			vm++;
-			int index = tree.nodeSize();
-			tree.addNode(index, count);
-			tree.currentNode->addEdge(tree.getSNode(index), x.first);
+			int index = tree->nodeSize();
+			tree->addNode(index, count);
+			tree->currentNode->addEdge(tree->getNode(index), x.first);
 		}
 
 	count++;
@@ -45,17 +46,17 @@ bool DepthFirstSearch::next() {
 			vm++;
 		}
 	
-	for (Edge e : tree.currentNode->edges) {
+	for (Edge e : tree->currentNode->edges) {
 		if (e.dir == dir) {
-			tree.currentNode = e.n1;
+			tree->currentNode = e.n1;
 			visitedNodes.push_back(e.index);
 			bwBoard.move(e.dir);
 			break;
 		}
 	}
 
-	if (count == 500)
-		return true;
+	//if (count == 500)
+		//return true;
 
 	return (bwBoard.isSolved());
 }

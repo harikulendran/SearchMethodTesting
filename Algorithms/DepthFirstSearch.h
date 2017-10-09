@@ -11,7 +11,7 @@ class DepthFirstSearch {
 	public:
 		vector<int> visitedNodes;
 		BlocksWorldBoard bwBoard{};
-		Tree tree;
+		shared_ptr<Tree> tree;
 		int count = 1;
 		DepthFirstSearch();
 		bool next();
