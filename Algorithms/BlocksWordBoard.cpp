@@ -11,16 +11,18 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	board[1][3] = 'B';
 	board[2][3] = 'C';
 	board[3][3] = 'a';
-	moves.try_emplace(Direction::RIGHT, Coord(1, 0));
+	/*moves.try_emplace(Direction::RIGHT, Coord(1, 0));
 	moves.try_emplace(Direction::LEFT, Coord(-1, 0));
 	moves.try_emplace(Direction::UP, Coord(0, -1));
 	moves.try_emplace(Direction::DOWN, Coord(0, 1));
+	*/
 }
 
 bool BlocksWorldBoard::isSolved() {
 	return (board[1][1] == 'A' &&
 		board[1][2] == 'B' &&
-		board[1][3] == 'C');
+		board[1][3] == 'C' &&
+		board[3][3] == 'a');
 }
 
 bool BlocksWorldBoard::isValid(Direction dir) {
@@ -34,14 +36,28 @@ void BlocksWorldBoard::checkMoves() {
 	validMoves[Direction::UP] = (agent.y != 0);
 }
 
+Coord BlocksWorldBoard::moves(Direction dir) {
+	switch (dir) {
+		case Direction::RIGHT :
+			return Coord(1, 0);
+		case Direction::LEFT :
+			return Coord(-1, 0);
+		case Direction::UP :
+			return Coord(0, -1);
+		case Direction::DOWN :
+			return Coord(0, 1);
+	}
+}
+
 void BlocksWorldBoard::move(Direction dir) {
 	if (dir == Direction::NA)
 		return;
-	int temp = board[agent.x + moves[dir].x][agent.y + moves[dir].y];
-	board[agent.x + moves[dir].x][agent.y + moves[dir].y] = 'a';
+	Coord offset = moves(dir);
+	int temp = board[agent.x + offset.x][agent.y + offset.y];
+	board[agent.x + offset.x][agent.y + offset.y] = 'a';
 	board[agent.x][agent.y] = temp;
-	agent.x += moves[dir].x;
-	agent.y += moves[dir].y;
+	agent.x += offset.x;
+	agent.y += offset.y;
 }
 
 void BlocksWorldBoard::print() {

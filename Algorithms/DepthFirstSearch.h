@@ -8,12 +8,13 @@ using namespace std;
 
 class DepthFirstSearch {
 	public:
-		stack<int> visitedNodes;
+		stack<NodeState> visitedNodes;
 		BlocksWorldBoard bwBoard{};
 		shared_ptr<Tree> tree;
 		int depth = 1;
 		DepthFirstSearch();
 		void search();
-		int getRandomAdjacentNode(int noOfValidMoves);
+		NodeState getRandomAdjacentNode(int noOfValidMoves);
+		NodeState getNextNode(int noOfValidMoves);
 		int getNoOfValidMoves();
 };

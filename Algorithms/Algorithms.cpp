@@ -7,13 +7,21 @@
 using namespace std;
 
 int main() {
-	auto start = chrono::steady_clock::now();
 	//BreadthFirstSearch b{};
 	//b.search();
-	DepthFirstSearch d{};
-	d.search();
-	auto timeTaken = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
-	cout << "Time taken: " << timeTaken.count() / 1000.0 << "s" << endl;
+	__int64 total = 0;
+	int testno = 100;
+	for (int i = 0; i < testno; i++) {
+		auto start = chrono::steady_clock::now();
+		DepthFirstSearch d{};
+		d.search();
+		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
+ 
+		total += dur.count();
+			
+		//cout << "time: " << dur.count() << endl;
+	}
+	cout << "Avg time taken: " << (double)total / (double)testno << "ms" << endl;
 
 //	DepthFirstSearch d{};
 	//d.search();

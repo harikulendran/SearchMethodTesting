@@ -14,6 +14,7 @@ class Edge {
 		Direction dir;
 		Node* n1;
 		Edge(int i, Direction di, Node* node1);
+		bool traversed = false;
 };
 
 class Node {

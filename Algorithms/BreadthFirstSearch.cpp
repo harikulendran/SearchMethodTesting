@@ -2,8 +2,8 @@
 
 BreadthFirstSearch::BreadthFirstSearch() {
 	tree = make_shared<Tree>();
-	treeNodes = new queue<BFSNode>();
-	treeNodes->push(BFSNode{ 0, BlocksWorldBoard{} });
+	treeNodes = new queue<NodeState>();
+	treeNodes->push(NodeState{ 0, BlocksWorldBoard{} });
 }
 
 void BreadthFirstSearch::search() {
@@ -15,7 +15,7 @@ void BreadthFirstSearch::search() {
 
 void BreadthFirstSearch::addCurrentNodeEdges() {
 	//get the earliest node and remove it from the queue
-	BFSNode current = treeNodes->front();
+	NodeState current = treeNodes->front();
 	treeNodes->pop();
 
 	//expand the available directions
@@ -27,7 +27,7 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			newBoard.move(x.first);
 			int nextNode = tree->nodeSize();
 			tree->addNode(nextNode, tree->getNode(current.node)->depth + 1);
-			treeNodes->push(BFSNode{ nextNode, newBoard });
+			treeNodes->push(NodeState{ nextNode, newBoard });
 
 			//when solution is found, stop
 			if (newBoard.isSolved()) {
@@ -39,4 +39,4 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 	}
 }
 
-BFSNode::BFSNode(int i, BlocksWorldBoard s) : node(i), state(s) {}
+NodeState::NodeState(int i, BlocksWorldBoard s) : node(i), state(s) {}
