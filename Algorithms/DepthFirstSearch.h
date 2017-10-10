@@ -14,7 +14,6 @@ class DepthFirstSearch {
 		shared_ptr<Tree> tree;
 		int depth = 1;
 		DepthFirstSearch();
-		bool next();
 		void search();
 		int getRandomAdjacentNode(int noOfValidMoves);
 		int getNoOfValidMoves();
