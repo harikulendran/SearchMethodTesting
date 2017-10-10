@@ -6,10 +6,13 @@
 Coord::Coord(int acoord = 0, int bcoord = 0) : x(acoord), y(bcoord) {}
 
 BlocksWorldBoard::BlocksWorldBoard() {
-	board[0][3] = 1;
-	board[1][3] = 2;
-	board[2][3] = 3;
-	board[3][3] = 4;
+	for (int i = 0; i < BOARD_SIZE; i++)
+		for (int j = 0; j < BOARD_SIZE; j++)
+			board[i][j] = '.';
+	board[0][3] = 'A';
+	board[1][3] = 'B';
+	board[2][3] = 'C';
+	board[3][3] = 'a';
 	moves.insert_or_assign(Direction::RIGHT, Coord(1, 0));
 	moves.insert_or_assign(Direction::LEFT, Coord(-1, 0));
 	moves.insert_or_assign(Direction::UP, Coord(0, -1));
@@ -17,9 +20,9 @@ BlocksWorldBoard::BlocksWorldBoard() {
 }
 
 bool BlocksWorldBoard::isSolved() {
-	return (board[1][1] == 1 &&
-		board[1][2] == 2 &&
-		board[1][3] == 3);
+	return (board[1][1] == 'A' &&
+		board[1][2] == 'B' &&
+		board[1][3] == 'C');
 }
 
 bool BlocksWorldBoard::isValid(Direction dir) {
@@ -37,7 +40,7 @@ void BlocksWorldBoard::move(Direction dir) {
 	if (dir == Direction::NA)
 		return;
 	int temp = board[agent.x + moves[dir].x][agent.y + moves[dir].y];
-	board[agent.x + moves[dir].x][agent.y + moves[dir].y] = 4;
+	board[agent.x + moves[dir].x][agent.y + moves[dir].y] = 'a';
 	board[agent.x][agent.y] = temp;
 	agent.x += moves[dir].x;
 	agent.y += moves[dir].y;

@@ -27,7 +27,7 @@ class BlocksWorldBoard {
 		void move(Direction dir);
 		void print();
 	private:
-		int board[BOARD_SIZE][BOARD_SIZE] = { 0 };
+		char board[BOARD_SIZE][BOARD_SIZE] = {};
 		map<Direction, Coord> moves;
 		Coord agent{ 3,3 };
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
-#include <vector>
+#include <stack>
 #include "Tree.h"
 #include "BlocksWorldBoard.h"
 
@@ -9,11 +9,13 @@ using namespace std;
 
 class DepthFirstSearch {
 	public:
-		vector<int> visitedNodes;
+		stack<int> visitedNodes;
 		BlocksWorldBoard bwBoard{};
 		shared_ptr<Tree> tree;
-		int count = 1;
+		int depth = 1;
 		DepthFirstSearch();
 		bool next();
 		void search();
+		int getRandomAdjacentNode(int noOfValidMoves);
+		int getNoOfValidMoves();
 };
