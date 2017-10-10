@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Tree.h"
 #include <iostream>
 #include <vector>

@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #include <iostream>
 #include "BlocksWorldBoard.h"
 
@@ -13,10 +11,10 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	board[1][3] = 'B';
 	board[2][3] = 'C';
 	board[3][3] = 'a';
-	moves.insert_or_assign(Direction::RIGHT, Coord(1, 0));
-	moves.insert_or_assign(Direction::LEFT, Coord(-1, 0));
-	moves.insert_or_assign(Direction::UP, Coord(0, -1));
-	moves.insert_or_assign(Direction::DOWN, Coord(0, 1));
+	moves.try_emplace(Direction::RIGHT, Coord(1, 0));
+	moves.try_emplace(Direction::LEFT, Coord(-1, 0));
+	moves.try_emplace(Direction::UP, Coord(0, -1));
+	moves.try_emplace(Direction::DOWN, Coord(0, 1));
 }
 
 bool BlocksWorldBoard::isSolved() {

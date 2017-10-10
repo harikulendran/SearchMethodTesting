@@ -1,6 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
 #include <stack>
 #include "Tree.h"
 #include "BlocksWorldBoard.h"

@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #include "DepthFirstSearch.h"
 #include "stdlib.h"
 #include "time.h"
@@ -27,8 +25,6 @@ void DepthFirstSearch::search() {
 	cout << "Number of edges in memory: " << tree->edgeSize() << endl;
 	cout << "Final board: " << endl;
 	bwBoard.print();
-	int qqq;
-	cin >> qqq;
 }
 
 int DepthFirstSearch::getNoOfValidMoves() {
