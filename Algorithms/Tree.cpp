@@ -15,7 +15,7 @@ bool Node::operator==(const Node* rhs) {
 bool Node::operator!=(const Node* rhs) {
 	return !(*this == rhs);
 }
-Node::Node(int i, int p, int d) : index(i), parentIndex(p), depth(d) {}
+Node::Node(int i, int p, BlocksWorldBoard s, int d) : index(i), parentIndex(p), state(s), depth(d) {}
 
 void Node::addEdge(Node* n, Direction d) {
 	if (*this != n) {
@@ -28,8 +28,8 @@ int Node::edgeSize() {
 	return edges.size();
 }
 
-Tree::Tree() {
-	addNode(0,-1,0);
+Tree::Tree(BlocksWorldBoard s) {
+	addNode(0,-1,s,0);
 	root = getNode(0);
 	currentNode = root;
 }
@@ -41,8 +41,8 @@ Tree::~Tree() {
 	}
 }
 		
-void Tree::addNode(int i, int p, int d) {
-	nodes.emplace_back(new Node(i,p,d));
+void Tree::addNode(int i, int p, BlocksWorldBoard s, int d) {
+	nodes.emplace_back(new Node(i,p,s,d));
 }
 Node* Tree::getNode(int i) {
 	return (nodes.at(i));
@@ -60,7 +60,7 @@ int Tree::edgeSize() {
 	return sum;
 }
 
-Tree Tree::getRandomTree(int n, int p) {
+/*Tree Tree::getRandomTree(int n, int p) {
 	Tree t{};
 	
 	for (int i = 0; i < n; i++)
@@ -75,9 +75,9 @@ Tree Tree::getRandomTree(int n, int p) {
 				(t.getNode(i))->addEdge(t.getNode(j), Direction::NA);
 		index2++;
 	}
-	/*cout << endl << "inside edgesize " << t.edgeSize() << endl;
+	cout << endl << "inside edgesize " << t.edgeSize() << endl;
 	cout << "inside index " << t.root->index << endl;
 	for (Edge pi : (t.nodes)[0]->edges)
-		cout << "in root edges: " << pi.index << endl;*/
+		cout << "in root edges: " << pi.index << endl;
 	return t;
-}
+}*/

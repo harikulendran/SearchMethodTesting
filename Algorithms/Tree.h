@@ -23,10 +23,11 @@ class Node {
 		int index;
 		int parentIndex;
 		int depth;
+		BlocksWorldBoard state;
 		vector<Edge> edges;
 		bool operator==(const Node* rhs);
 		bool operator!=(const Node* rhs);
-		Node(int i, int p, int d);
+		Node(int i, int p, BlocksWorldBoard s, int d);
 		~Node() = default;
 		void addEdge(Node* n, Direction d);
 		int edgeSize();
@@ -37,9 +38,9 @@ class Tree {
 		Node* root;
 		Node* currentNode;
 		vector<Node*> nodes;
-		Tree();
+		Tree(BlocksWorldBoard s);
 		~Tree();
-		void addNode(int i, int p, int d);
+		void addNode(int i, int p, BlocksWorldBoard s, int d);
 		Node* getNode(int i);
 		//shared_ptr<Node> getSNode(int i);
 		int nodeSize();

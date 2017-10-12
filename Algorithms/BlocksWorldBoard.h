@@ -31,12 +31,3 @@ class BlocksWorldBoard {
 		char board[BOARD_SIZE][BOARD_SIZE] = {};
 		Coord agent{ 3,3 };
 };
-
-struct NodeState {
-	public:
-		int node;
-		BlocksWorldBoard state;
-		NodeState() = default;
-		~NodeState() = default;
-		NodeState(int i, BlocksWorldBoard s);
-};

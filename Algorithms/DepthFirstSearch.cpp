@@ -4,17 +4,17 @@
 
 DepthFirstSearch::DepthFirstSearch() {
 	srand(time(NULL));
-	tree = make_shared<Tree>();
+	tree = make_shared<Tree>(bwBoard);
 }
 
 void DepthFirstSearch::search() {
 	//push the root node to start
-	visitedNodes.push(NodeState{0,BlocksWorldBoard(bwBoard)});
+	visitedNodes.push(0);
 
 	while (!visitedNodes.empty() && !bwBoard.isSolved()) {
 		int noOfValidMoves = getNoOfValidMoves();
 		if (noOfValidMoves > 0) {
-			NodeState randomNode = getRandomAdjacentNode(noOfValidMoves);
+			int randomNode = getRandomAdjacentNode(noOfValidMoves);
 			visitedNodes.push(randomNode);
 			depth++;
 		} else
@@ -33,19 +33,19 @@ int DepthFirstSearch::getNoOfValidMoves() {
 	bwBoard.checkMoves();
 	int noOfValidMoves = 0;
 
-	int d = tree->getNode(visitedNodes.top().node)->depth;
+	int d = tree->getNode(visitedNodes.top())->depth;
 	//expand tree
 	for (auto const& x : bwBoard.validMoves)
 		if (x.second) {
 			noOfValidMoves++;
 			int nextNode = tree->nodeSize();
-			tree->addNode(nextNode, tree->currentNode->index, d+1);
+			tree->addNode(nextNode, tree->currentNode->index, BlocksWorldBoard{ bwBoard }, d + 1);
 			tree->currentNode->addEdge(tree->getNode(nextNode), x.first);
 		}
 	return noOfValidMoves;
 }
 
-NodeState DepthFirstSearch::getRandomAdjacentNode(int noOfValidMoves) {
+int DepthFirstSearch::getRandomAdjacentNode(int noOfValidMoves) {
 	//select a random adjacent direction
 	int randomIndex = rand() % noOfValidMoves;
 	Direction randomDir = Direction::NA;
@@ -65,11 +65,11 @@ NodeState DepthFirstSearch::getRandomAdjacentNode(int noOfValidMoves) {
 			tree->currentNode = e.n1;
 			bwBoard.move(e.dir);
 			e.traversed = true;
-			return NodeState{ e.n1->index, BlocksWorldBoard{bwBoard} };
+			return e.n1->index;
 		}
-	return NodeState{ -1,BlocksWorldBoard{} };
+	return -1;
 }
 
-NodeState DepthFirstSearch::getNextNode(int noOfValidMoves) {
+int DepthFirstSearch::getNextNode(int noOfValidMoves) {
 
 }
