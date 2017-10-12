@@ -14,18 +14,20 @@ class Edge {
 		Direction dir;
 		Node* n1;
 		Edge(int i, Direction di, Node* node1);
+		~Edge() = default;
 		bool traversed = false;
 };
 
 class Node {
 	public:
 		int index;
+		int parentIndex;
 		int depth;
 		vector<Edge> edges;
 		bool operator==(const Node* rhs);
 		bool operator!=(const Node* rhs);
-		Node(int i, int d);
-		//~Node();
+		Node(int i, int p, int d);
+		~Node() = default;
 		void addEdge(Node* n, Direction d);
 		int edgeSize();
 };
@@ -36,8 +38,8 @@ class Tree {
 		Node* currentNode;
 		vector<Node*> nodes;
 		Tree();
-		//~Tree();
-		void addNode(int i, int d);
+		~Tree();
+		void addNode(int i, int p, int d);
 		Node* getNode(int i);
 		//shared_ptr<Node> getSNode(int i);
 		int nodeSize();

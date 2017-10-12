@@ -19,6 +19,7 @@ class Coord {
 class BlocksWorldBoard {
 	public:
 		BlocksWorldBoard();
+		~BlocksWorldBoard() = default;
 		map<Direction, bool> validMoves;
 		bool isSolved();
 		void checkMoves();
@@ -36,5 +37,6 @@ struct NodeState {
 		int node;
 		BlocksWorldBoard state;
 		NodeState() = default;
+		~NodeState() = default;
 		NodeState(int i, BlocksWorldBoard s);
 };

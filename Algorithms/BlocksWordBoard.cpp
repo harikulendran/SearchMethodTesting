@@ -21,8 +21,7 @@ BlocksWorldBoard::BlocksWorldBoard() {
 bool BlocksWorldBoard::isSolved() {
 	return (board[1][1] == 'A' &&
 		board[1][2] == 'B' &&
-		board[1][3] == 'C' &&
-		board[3][3] == 'a');
+		board[1][3] == 'C');
 }
 
 bool BlocksWorldBoard::isValid(Direction dir) {

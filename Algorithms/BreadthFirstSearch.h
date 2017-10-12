@@ -15,6 +15,7 @@ class BreadthFirstSearch {
 		queue<NodeState>* treeNodes;
 		NodeState completeNode;
 		BreadthFirstSearch();
+		~BreadthFirstSearch();
 		void search();
 		void addCurrentNodeEdges();
 };

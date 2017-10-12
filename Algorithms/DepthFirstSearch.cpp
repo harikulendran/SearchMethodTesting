@@ -39,7 +39,7 @@ int DepthFirstSearch::getNoOfValidMoves() {
 		if (x.second) {
 			noOfValidMoves++;
 			int nextNode = tree->nodeSize();
-			tree->addNode(nextNode, d+1);
+			tree->addNode(nextNode, tree->currentNode->index, d+1);
 			tree->currentNode->addEdge(tree->getNode(nextNode), x.first);
 		}
 	return noOfValidMoves;

@@ -6,6 +6,11 @@ BreadthFirstSearch::BreadthFirstSearch() {
 	treeNodes->push(NodeState{ 0, BlocksWorldBoard{} });
 }
 
+BreadthFirstSearch::~BreadthFirstSearch() {
+	delete treeNodes;
+	treeNodes = nullptr;
+}
+
 void BreadthFirstSearch::search() {
 	while (!complete)
 		addCurrentNodeEdges();
@@ -26,7 +31,7 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			BlocksWorldBoard newBoard = BlocksWorldBoard(current.state);
 			newBoard.move(x.first);
 			int nextNode = tree->nodeSize();
-			tree->addNode(nextNode, tree->getNode(current.node)->depth + 1);
+			tree->addNode(nextNode, tree->currentNode->index, tree->getNode(current.node)->depth + 1);
 			treeNodes->push(NodeState{ nextNode, newBoard });
 
 			//when solution is found, stop

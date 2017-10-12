@@ -9,12 +9,17 @@ using namespace std;
 int main() {
 	//BreadthFirstSearch b{};
 	//b.search();
+
+
+
 	__int64 total = 0;
-	int testno = 100;
+	int testno = 10;
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
 		DepthFirstSearch d{};
 		d.search();
+		//BreadthFirstSearch b{};
+		//b.search();
 		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
  
 		total += dur.count();
@@ -22,9 +27,16 @@ int main() {
 		//cout << "time: " << dur.count() << endl;
 	}
 	cout << "Avg time taken: " << (double)total / (double)testno << "ms" << endl;
+	
 
-//	DepthFirstSearch d{};
-	//d.search();
+
+
+	/*{
+		BreadthFirstSearch d{};
+		d.search();
+		int qq;
+		cin >> qq;
+	}*/
 
 	/*BlocksWorldBoard b{};
 	b.move(Direction::LEFT);

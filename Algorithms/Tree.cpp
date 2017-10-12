@@ -15,7 +15,7 @@ bool Node::operator==(const Node* rhs) {
 bool Node::operator!=(const Node* rhs) {
 	return !(*this == rhs);
 }
-Node::Node(int i, int d) : index(i), depth(d) {}
+Node::Node(int i, int p, int d) : index(i), parentIndex(p), depth(d) {}
 
 void Node::addEdge(Node* n, Direction d) {
 	if (*this != n) {
@@ -29,13 +29,20 @@ int Node::edgeSize() {
 }
 
 Tree::Tree() {
-	addNode(0,0);
+	addNode(0,-1,0);
 	root = getNode(0);
 	currentNode = root;
 }
+
+Tree::~Tree() {
+	for (Node* n : nodes) {
+		delete n;
+		n = nullptr;
+	}
+}
 		
-void Tree::addNode(int i, int d) {
-	nodes.emplace_back(new Node(i,d));
+void Tree::addNode(int i, int p, int d) {
+	nodes.emplace_back(new Node(i,p,d));
 }
 Node* Tree::getNode(int i) {
 	return (nodes.at(i));
@@ -57,7 +64,7 @@ Tree Tree::getRandomTree(int n, int p) {
 	Tree t{};
 	
 	for (int i = 0; i < n; i++)
-		t.addNode(i,0);
+		t.addNode(i,-1,0);
 
 	t.root = t.nodes.at(0);
 
