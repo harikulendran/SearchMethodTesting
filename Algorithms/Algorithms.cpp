@@ -13,13 +13,13 @@ int main() {
 
 
 	__int64 total = 0;
-	int testno = 1;
+	int testno = 1000;
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
-		//DepthFirstSearch d{};
-		//d.search();
-		BreadthFirstSearch b{};
-		b.search();
+		DepthFirstSearch d{};
+		d.search();
+		//BreadthFirstSearch b{};
+		//b.search();
 		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
  
 		total += dur.count();

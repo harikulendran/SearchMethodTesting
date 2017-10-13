@@ -13,9 +13,11 @@ class Edge {
 		int index;
 		Direction dir;
 		Node* n1;
+		//bool traversed = false;
+
+	public:
 		Edge(int i, Direction di, Node* node1);
 		~Edge() = default;
-		bool traversed = false;
 };
 
 class Node {
@@ -25,10 +27,14 @@ class Node {
 		int depth;
 		BlocksWorldBoard state;
 		vector<Edge> edges;
-		bool operator==(const Node* rhs);
-		bool operator!=(const Node* rhs);
+
+	public:
 		Node(int i, int p, BlocksWorldBoard s, int d);
 		~Node() = default;
+
+	public:
+		bool operator==(const Node* rhs);
+		bool operator!=(const Node* rhs);
 		void addEdge(Node* n, Direction d);
 		int edgeSize();
 };
@@ -38,12 +44,14 @@ class Tree {
 		Node* root;
 		Node* currentNode;
 		vector<Node*> nodes;
+
+	public:
 		Tree(BlocksWorldBoard s);
 		~Tree();
+
+	public:
 		void addNode(int i, int p, BlocksWorldBoard s, int d);
 		Node* getNode(int i);
-		//shared_ptr<Node> getSNode(int i);
 		int nodeSize();
 		int edgeSize();
-		static Tree getRandomTree(int n, int p);
 };

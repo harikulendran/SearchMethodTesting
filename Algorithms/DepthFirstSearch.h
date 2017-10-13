@@ -14,7 +14,7 @@ class DepthFirstSearch {
 		int depth = 1;
 		DepthFirstSearch();
 		void search();
-		int getRandomAdjacentNode(int noOfValidMoves);
+		void addRandomAdjacentNode(int noOfValidMoves);
 		int getNextNode(int noOfValidMoves);
 		int getNoOfValidMoves();
 };
