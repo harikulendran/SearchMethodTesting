@@ -8,24 +8,12 @@ using namespace std;
 
 class Node;
 
-class Edge {
-	public:
-		int index;
-		Direction dir;
-		int n1;
-
-	public:
-		Edge(int i, Direction di, int node1);
-		~Edge() = default;
-};
-
 class Node {
 	public:
 		int index;
 		int parentIndex;
 		int depth;
-		//BlocksWorldBoard state;
-		vector<Edge> edges;
+		map<Direction, int> edges;
 
 	public:
 		Node(int i = -1, int p = -1, int d = -1);

@@ -13,7 +13,7 @@ int main() {
 
 
 	__int64 total = 0;
-	int testno = 1;
+	int testno = 1000;
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
 		DepthFirstSearch d{};
@@ -48,8 +48,8 @@ int main() {
 	cout << "ADFASDF" << endl;
 	b2.print();
 	*/
-	int q;
-	cin >> q;
+	//int q;
+	//cin >> q;
 
 	return 0;
 }
