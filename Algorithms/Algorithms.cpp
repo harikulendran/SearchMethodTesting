@@ -17,8 +17,8 @@ int main() {
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
 		DepthFirstSearch d{};
-		//d.search();
-		d.iterativeSearch(5,25,1);
+		d.search();
+		//d.iterativeSearch(5,25,1);
 		//BreadthFirstSearch b{};
 		//b.search();
 		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);

@@ -6,32 +6,17 @@
 using namespace std;
 
 //Edge
-Edge::Edge(int i, Direction d, Node* node1) : index(i), dir(d), n1(node1) {}
+Edge::Edge(int i, Direction d, int node1) : index(i), dir(d), n1(node1) {}
 
 //Node
-bool Node::operator==(const Node* rhs) {
-	return (this->index == rhs->index);
-}
-bool Node::operator!=(const Node* rhs) {
-	return !(*this == rhs);
-}
 Node::Node(int i, int p, int d) : index(i), parentIndex(p), depth(d) {}
 
-void Node::addEdge(Node* n, Direction d) {
-	if (*this != n) {
-		edges.emplace_back(Edge(edges.size(), d, n));
+void Node::addEdge(int n, Direction d) {
+	if (index != n) {
+		edges.push_back(Edge(edges.size(), d, n));
 		//cout << index << " - " << &edges << ": " << edges.size() << endl;
 		//edges.emplace_v
 	}
-}
-
-void Node::removeEdge(int index) {
-	vector<Edge>::iterator it = edges.begin();
-	for (; it != edges.end();)
-		if (it->n1->index == index)
-			it = edges.erase(it);
-		else
-			++it;
 }
 
 int Node::edgeSize() {
@@ -40,22 +25,18 @@ int Node::edgeSize() {
 
 Tree::Tree() {
 	addNode(0,-1,0);
-	root = getNode(0);
-	currentNode = root;
 }
 
-Tree::~Tree() {
-	for (Node* n : nodes) {
-		delete n;
-		n = nullptr;
-	}
-}
-		
 void Tree::addNode(int i, int p, int d) {
-	nodes.emplace_back(new Node(i,p,d));
+	nodes.push_back(Node(nodeIndex,p,d));
+	nodeIndex++;
 }
 Node* Tree::getNode(int i) {
-	return (nodes.at(i));
+	for (Node& n : nodes)
+		if (n.index == i)
+			return &n;
+	cout << "BAD THING HAPPENED" << endl;
+	return nullptr;
 }
 /*shared_ptr<Node> Tree::getSNode(int i) {
 	return nodes.at(i);
@@ -65,8 +46,8 @@ int Tree::nodeSize() {
 }
 int Tree::edgeSize() {
 	int sum = 0;
-	for (Node* n : nodes)
-		sum += n->edgeSize();
+	for (Node& n : nodes)
+		sum += n.edgeSize();
 	return sum;
 }
 

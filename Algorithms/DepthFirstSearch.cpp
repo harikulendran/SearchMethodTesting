@@ -34,7 +34,6 @@ bool DepthFirstSearch::search(int maxDepth) {
 		}
 		else {
 			//palce
-			delete tree->nodes[currentNode.thisNode];
 			visitedNodes.pop();
 			if (!visitedNodes.empty())
 				currentNode = visitedNodes.top();
@@ -63,7 +62,7 @@ int DepthFirstSearch::getNoOfValidMoves() {
 			//BlocksWorldBoard newState = BlocksWorldBoard{ bwBoard };
 			//newState.move(x.first);
 			tree->addNode(nextNode, currentNode.thisNode, d + 1);
-			tree->getNode(currentNode.thisNode)->addEdge(tree->getNode(nextNode), x.first);
+			tree->getNode(currentNode.thisNode)->addEdge(nextNode, x.first);
 		}
 
 	return noOfValidMoves;
@@ -77,7 +76,7 @@ void DepthFirstSearch::addRandomAdjacentNode(int noOfValidMoves) {
 		Edge e = tree->getNode(currentNode.thisNode)->edges[(randomIndex + i) % tree->getNode(currentNode.thisNode)->edges.size()];
 		BlocksWorldBoard newState = BlocksWorldBoard{ currentNode.state };
 		newState.move(e.dir);
-		visitedNodes.push(NodeState{e.n1->index, e.n1->parentIndex, newState});
+		visitedNodes.push(NodeState{e.n1, tree->getNode(e.n1)->parentIndex, newState});
 		if (i == noOfValidMoves - 1) {
 			currentNode = visitedNodes.top();
 		}
