@@ -15,7 +15,7 @@ bool Node::operator==(const Node* rhs) {
 bool Node::operator!=(const Node* rhs) {
 	return !(*this == rhs);
 }
-Node::Node(int i, int p, BlocksWorldBoard s, int d) : index(i), parentIndex(p), state(s), depth(d) {}
+Node::Node(int i, int p, int d) : index(i), parentIndex(p), depth(d) {}
 
 void Node::addEdge(Node* n, Direction d) {
 	if (*this != n) {
@@ -24,12 +24,22 @@ void Node::addEdge(Node* n, Direction d) {
 		//edges.emplace_v
 	}
 }
+
+void Node::removeEdge(int index) {
+	vector<Edge>::iterator it = edges.begin();
+	for (; it != edges.end();)
+		if (it->n1->index == index)
+			it = edges.erase(it);
+		else
+			++it;
+}
+
 int Node::edgeSize() {
 	return edges.size();
 }
 
-Tree::Tree(BlocksWorldBoard s) {
-	addNode(0,-1,s,0);
+Tree::Tree() {
+	addNode(0,-1,0);
 	root = getNode(0);
 	currentNode = root;
 }
@@ -41,8 +51,8 @@ Tree::~Tree() {
 	}
 }
 		
-void Tree::addNode(int i, int p, BlocksWorldBoard s, int d) {
-	nodes.emplace_back(new Node(i,p,s,d));
+void Tree::addNode(int i, int p, int d) {
+	nodes.emplace_back(new Node(i,p,d));
 }
 Node* Tree::getNode(int i) {
 	return (nodes.at(i));

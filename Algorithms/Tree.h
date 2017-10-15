@@ -25,17 +25,18 @@ class Node {
 		int index;
 		int parentIndex;
 		int depth;
-		BlocksWorldBoard state;
+		//BlocksWorldBoard state;
 		vector<Edge> edges;
 
 	public:
-		Node(int i, int p, BlocksWorldBoard s, int d);
+		Node(int i, int p, int d);
 		~Node() = default;
 
 	public:
 		bool operator==(const Node* rhs);
 		bool operator!=(const Node* rhs);
 		void addEdge(Node* n, Direction d);
+		void removeEdge(int index);
 		int edgeSize();
 };
 
@@ -46,11 +47,11 @@ class Tree {
 		vector<Node*> nodes;
 
 	public:
-		Tree(BlocksWorldBoard s);
+		Tree();
 		~Tree();
 
 	public:
-		void addNode(int i, int p, BlocksWorldBoard s, int d);
+		void addNode(int i, int p, int d);
 		Node* getNode(int i);
 		int nodeSize();
 		int edgeSize();

@@ -5,7 +5,6 @@
 
 DepthFirstSearch::DepthFirstSearch() {
 	srand(time(NULL));
-	tree = make_shared<Tree>(bwBoard);
 }
 
 void DepthFirstSearch::search() {
@@ -20,57 +19,66 @@ void DepthFirstSearch::iterativeSearch(int initDepth, int maxDepth, int interval
 }
 
 bool DepthFirstSearch::search(int maxDepth) {
+	//cout << "Number of edges in memory PRESET: " << tree->edgeSize() << endl;
+	tree = make_shared<Tree>();
+	cout << "Number of edges in memory POSTSET: " << tree->edgeSize() << endl;
 	//push the root node to start
-	visitedNodes.push(0);
+	visitedNodes.push(NodeState{0,-1,bwBoard});
+	currentNode = visitedNodes.top();
 
-	while (!visitedNodes.empty() && !bwBoard.isSolved()) {
+	while (!visitedNodes.empty() && !currentNode.state.isSolved()) {
 		int noOfValidMoves = getNoOfValidMoves();
-		if (noOfValidMoves > 0 && tree->currentNode->depth < maxDepth) {
+		if (noOfValidMoves > 0 && tree->getNode(currentNode.thisNode)->depth < maxDepth && !currentNode.expanded) {
 			addRandomAdjacentNode(noOfValidMoves);
 			depth++;
-		} else {
-			delete tree->getNode(visitedNodes.top());
+		}
+		else {
+			//tree->getNode(currentNode.parentNode)->removeEdge(currentNode.thisNode);
 			visitedNodes.pop();
-			tree->currentNode = tree->getNode(visitedNodes.top());
-			bwBoard = tree->currentNode->state;
+			if (!visitedNodes.empty())
+				currentNode = visitedNodes.top();
 		}
 	}
 	
-	cout << "Depth reached: " << tree->getNode(visitedNodes.top())->depth << endl;
+	cout << "Depth reached: " << tree->getNode(currentNode.thisNode)->depth << endl;
 	cout << "Number of nodes in memory: " << visitedNodes.size() << endl;
 	cout << "Number of edges in memory: " << tree->edgeSize() << endl;
 	cout << "Final board: " << endl;
-	bwBoard.print();
-	return bwBoard.isSolved();
+	currentNode.state.print();
+	return currentNode.state.isSolved();
 }
 
 int DepthFirstSearch::getNoOfValidMoves() {
-	bwBoard.checkMoves();
+	//bwBoard.checkMoves();
+	currentNode.state.checkMoves();
 	int noOfValidMoves = 0;
 
-	int d = tree->getNode(visitedNodes.top())->depth;
+	int d = tree->getNode(currentNode.thisNode)->depth;
 	//expand tree
-	for (auto const& x : bwBoard.validMoves)
+	for (auto const& x : currentNode.state.validMoves)
 		if (x.second) {
 			noOfValidMoves++;
 			int nextNode = tree->nodeSize();
-			BlocksWorldBoard newState = BlocksWorldBoard{ bwBoard };
-			newState.move(x.first);
-			tree->addNode(nextNode, tree->currentNode->index, newState, d + 1);
-			tree->currentNode->addEdge(tree->getNode(nextNode), x.first);
+			//BlocksWorldBoard newState = BlocksWorldBoard{ bwBoard };
+			//newState.move(x.first);
+			tree->addNode(nextNode, currentNode.thisNode, d + 1);
+			tree->getNode(currentNode.thisNode)->addEdge(tree->getNode(nextNode), x.first);
 		}
+
 	return noOfValidMoves;
 }
 
 
 void DepthFirstSearch::addRandomAdjacentNode(int noOfValidMoves) {
 	int randomIndex = rand() % noOfValidMoves;
+	visitedNodes.top().expanded = true;
 	for (int i = 0; i < noOfValidMoves; i++) {
-		Edge e = tree->currentNode->edges[(randomIndex + i) % tree->currentNode->edges.size()];
-		visitedNodes.push(e.n1->index);
+		Edge e = tree->getNode(currentNode.thisNode)->edges[(randomIndex + i) % tree->getNode(currentNode.thisNode)->edges.size()];
+		BlocksWorldBoard newState = BlocksWorldBoard{ currentNode.state };
+		newState.move(e.dir);
+		visitedNodes.push(NodeState{e.n1->index, e.n1->parentIndex, newState});
 		if (i == noOfValidMoves - 1) {
-			tree->currentNode = e.n1;
-			bwBoard = e.n1->state;
+			currentNode = visitedNodes.top();
 		}
 	}
 }

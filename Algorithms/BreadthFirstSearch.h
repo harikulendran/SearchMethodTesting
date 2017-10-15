@@ -2,6 +2,7 @@
 
 #include <queue>
 #include "Tree.h"
+#include "NodeState.h"
 #include "BlocksWorldBoard.h"
 
 
@@ -12,10 +13,10 @@ class BreadthFirstSearch {
 	public:
 		bool complete = false;
 		shared_ptr<Tree> tree;
-		queue<int>* treeNodes;
-		int completeNode;
+		queue <NodeState> treeNodes{};
+		NodeState completeNode;
 		BreadthFirstSearch();
-		~BreadthFirstSearch();
+		~BreadthFirstSearch() = default;
 		void search();
 		void addCurrentNodeEdges();
 		void showSolution();
