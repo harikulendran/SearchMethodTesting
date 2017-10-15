@@ -28,7 +28,7 @@ class Node {
 		vector<Edge> edges;
 
 	public:
-		Node(int i, int p, int d);
+		Node(int i = -1, int p = -1, int d = -1);
 		~Node() = default;
 
 	public:
@@ -38,7 +38,7 @@ class Node {
 
 class Tree {
 	public:
-		vector<Node> nodes;
+		map<int,Node> nodes;
 		int nodeIndex = 0;
 
 	public:
@@ -46,7 +46,7 @@ class Tree {
 		~Tree() = default;
 
 	public:
-		void addNode(int i, int p, int d);
+		void addNode(int p, int d);
 		Node* getNode(int i);
 		int nodeSize();
 		int edgeSize();

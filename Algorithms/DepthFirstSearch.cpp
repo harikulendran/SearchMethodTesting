@@ -19,32 +19,31 @@ void DepthFirstSearch::iterativeSearch(int initDepth, int maxDepth, int interval
 }
 
 bool DepthFirstSearch::search(int maxDepth) {
-	//cout << "Number of edges in memory PRESET: " << tree->edgeSize() << endl;
 	tree = make_shared<Tree>();
-	cout << "Number of edges in memory POSTSET: " << tree->edgeSize() << endl;
 	//push the root node to start
 	visitedNodes.push(NodeState{0,-1,bwBoard});
 	currentNode = visitedNodes.top();
 
 	while (!visitedNodes.empty() && !currentNode.state.isSolved()) {
-		int noOfValidMoves = getNoOfValidMoves();
-		if (noOfValidMoves > 0 && tree->getNode(currentNode.thisNode)->depth < maxDepth && !currentNode.expanded) {
+		if (tree->getNode(currentNode.thisNode)->depth < maxDepth && !currentNode.expanded) {
+			int noOfValidMoves = getNoOfValidMoves();
 			addRandomAdjacentNode(noOfValidMoves);
 			depth++;
 		}
 		else {
-			//palce
+			tree->nodes.erase(visitedNodes.top().thisNode);
 			visitedNodes.pop();
 			if (!visitedNodes.empty())
 				currentNode = visitedNodes.top();
 		}
 	}
-	
-	cout << "Depth reached: " << tree->getNode(currentNode.thisNode)->depth << endl;
-	cout << "Number of nodes in memory: " << visitedNodes.size() << endl;
-	cout << "Number of edges in memory: " << tree->edgeSize() << endl;
-	cout << "Final board: " << endl;
-	currentNode.state.print();
+	if (currentNode.state.isSolved()) {
+		cout << "Depth reached: " << tree->getNode(currentNode.thisNode)->depth << endl;
+		cout << "Number of nodes in memory: " << visitedNodes.size() << endl;
+		cout << "Number of edges in memory: " << tree->edgeSize() << endl;
+		cout << "Final board: " << endl;
+		currentNode.state.print();
+	}
 	return currentNode.state.isSolved();
 }
 
@@ -58,10 +57,10 @@ int DepthFirstSearch::getNoOfValidMoves() {
 	for (auto const& x : currentNode.state.validMoves)
 		if (x.second) {
 			noOfValidMoves++;
-			int nextNode = tree->nodeSize();
 			//BlocksWorldBoard newState = BlocksWorldBoard{ bwBoard };
 			//newState.move(x.first);
-			tree->addNode(nextNode, currentNode.thisNode, d + 1);
+			int nextNode = tree->nodeIndex;
+			tree->addNode(currentNode.thisNode, d + 1);
 			tree->getNode(currentNode.thisNode)->addEdge(nextNode, x.first);
 		}
 

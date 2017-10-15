@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <memory>
 
@@ -24,19 +25,15 @@ int Node::edgeSize() {
 }
 
 Tree::Tree() {
-	addNode(0,-1,0);
+	addNode(-1,0);
 }
 
-void Tree::addNode(int i, int p, int d) {
-	nodes.push_back(Node(nodeIndex,p,d));
+void Tree::addNode(int p, int d) {
+	nodes[nodeIndex] = Node(nodeIndex,p,d);
 	nodeIndex++;
 }
 Node* Tree::getNode(int i) {
-	for (Node& n : nodes)
-		if (n.index == i)
-			return &n;
-	cout << "BAD THING HAPPENED" << endl;
-	return nullptr;
+	return &nodes[i];
 }
 /*shared_ptr<Node> Tree::getSNode(int i) {
 	return nodes.at(i);
@@ -46,8 +43,10 @@ int Tree::nodeSize() {
 }
 int Tree::edgeSize() {
 	int sum = 0;
-	for (Node& n : nodes)
-		sum += n.edgeSize();
+	for (auto const& x : nodes) {
+		Node temp = x.second;
+		sum += temp.edgeSize();
+	}
 	return sum;
 }
 
