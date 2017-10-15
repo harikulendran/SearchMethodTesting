@@ -12,11 +12,10 @@ class Edge {
 	public:
 		int index;
 		Direction dir;
-		Node* n1;
-		//bool traversed = false;
+		int n1;
 
 	public:
-		Edge(int i, Direction di, Node* node1);
+		Edge(int i, Direction di, int node1);
 		~Edge() = default;
 };
 
@@ -29,29 +28,25 @@ class Node {
 		vector<Edge> edges;
 
 	public:
-		Node(int i, int p, int d);
+		Node(int i = -1, int p = -1, int d = -1);
 		~Node() = default;
 
 	public:
-		bool operator==(const Node* rhs);
-		bool operator!=(const Node* rhs);
-		void addEdge(Node* n, Direction d);
-		void removeEdge(int index);
+		void addEdge(int n, Direction d);
 		int edgeSize();
 };
 
 class Tree {
 	public:
-		Node* root;
-		Node* currentNode;
-		vector<Node*> nodes;
+		map<int,Node> nodes;
+		int nodeIndex = 0;
 
 	public:
 		Tree();
-		~Tree();
+		~Tree() = default;
 
 	public:
-		void addNode(int i, int p, int d);
+		void addNode(int p, int d);
 		Node* getNode(int i);
 		int nodeSize();
 		int edgeSize();
