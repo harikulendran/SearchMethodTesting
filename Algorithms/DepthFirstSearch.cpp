@@ -33,7 +33,8 @@ bool DepthFirstSearch::search(int maxDepth) {
 			depth++;
 		}
 		else {
-			//tree->getNode(currentNode.parentNode)->removeEdge(currentNode.thisNode);
+			//palce
+			delete tree->nodes[currentNode.thisNode];
 			visitedNodes.pop();
 			if (!visitedNodes.empty())
 				currentNode = visitedNodes.top();
