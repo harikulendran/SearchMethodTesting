@@ -21,11 +21,11 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 
 	//expand the available directions
 	current.state.checkMoves();
-	for (auto const& x : current.state.validMoves) {
-		if (x.second) {
+	for (int i = 0; i < 4; i++) {
+		if (current.state.validMoves[i]) {
 			//save the state of the board at each node and add them to the queue
 			BlocksWorldBoard newBoard = BlocksWorldBoard(current.state);
-			newBoard.move(x.first);
+			newBoard.move(static_cast<Direction>(i));
 			tree->addNode(current.thisNode, tree->getNode(current.thisNode)->depth + 1);
 			treeNodes.push(NodeState{ tree->nodeIndex - 1, current.thisNode, newBoard });
 

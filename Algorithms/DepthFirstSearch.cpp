@@ -54,14 +54,12 @@ int DepthFirstSearch::getNoOfValidMoves() {
 
 	int d = tree->getNode(currentNode.thisNode)->depth;
 	//expand tree
-	for (auto const& x : currentNode.state.validMoves)
-		if (x.second) {
+	for (int i=0; i<4; i++)
+		if (currentNode.state.validMoves[i]) {
 			noOfValidMoves++;
-			//BlocksWorldBoard newState = BlocksWorldBoard{ bwBoard };
-			//newState.move(x.first);
 			int nextNode = tree->nodeIndex;
 			tree->addNode(currentNode.thisNode, d + 1);
-			tree->getNode(currentNode.thisNode)->addEdge(nextNode, x.first);
+			tree->getNode(currentNode.thisNode)->addEdge(nextNode, static_cast<Direction>(i));
 		}
 
 	return noOfValidMoves;
