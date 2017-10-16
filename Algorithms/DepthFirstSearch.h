@@ -11,9 +11,10 @@ class DepthFirstSearch {
 	public:
 		stack<NodeState> visitedNodes;
 		BlocksWorldBoard bwBoard{};
-		shared_ptr<Tree> tree;
+		//shared_ptr<Tree> tree;
 		NodeState currentNode;
 		int depth = 1;
+		int nodeIndex = 0;
 		DepthFirstSearch();
 		void search();
 		bool search(int maxDepth);

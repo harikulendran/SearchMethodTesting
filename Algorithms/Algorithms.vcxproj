@@ -146,6 +146,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="BlocksWorldBoard.h" />
     <ClInclude Include="BreadthFirstSearch.h" />
     <ClInclude Include="DepthFirstSearch.h" />

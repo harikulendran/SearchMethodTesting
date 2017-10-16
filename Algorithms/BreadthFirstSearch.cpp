@@ -1,16 +1,16 @@
 #include "BreadthFirstSearch.h"
 
 BreadthFirstSearch::BreadthFirstSearch() {
-	tree = make_shared<Tree>();
+	//tree = make_shared<Tree>();
 	treeNodes.push(NodeState{ 0,-1,BlocksWorldBoard{} });
 }
 
 void BreadthFirstSearch::search() {
 	while (!complete)
 		addCurrentNodeEdges();
-	cout << "Depth: " << tree->getNode(completeNode.thisNode)->depth << endl;
+	/*cout << "Depth: " << completeNode.depth << endl;
 	completeNode.state.print();
-	cout << "Printing Steps:" << endl;
+	cout << "Printing Steps:" << endl;*/
 	//showSolution();
 }
 
@@ -26,8 +26,8 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			//save the state of the board at each node and add them to the queue
 			BlocksWorldBoard newBoard = BlocksWorldBoard(current.state);
 			newBoard.move(static_cast<Direction>(i));
-			tree->addNode(current.thisNode, tree->getNode(current.thisNode)->depth + 1);
-			treeNodes.push(NodeState{ tree->nodeIndex - 1, current.thisNode, newBoard });
+			//tree->addNode(current.thisNode, tree->getNode(current.thisNode)->depth + 1);
+			treeNodes.push(NodeState{ ++nodeIndex, current.thisNode, newBoard, current.depth+1 });
 
 			//when solution is found, stop
 			if (newBoard.isSolved()) {
