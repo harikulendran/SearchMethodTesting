@@ -16,11 +16,11 @@ int main() {
 	int testno = 1;
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
-		DepthFirstSearch d{};
-		d.search();
+		//DepthFirstSearch d{};
+		//d.search();
 		//d.iterativeSearch(0,25,1);
-		//BreadthFirstSearch b{};
-		//b.search();
+		BreadthFirstSearch b{};
+		b.search();
 		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
  
 		total += dur.count();
@@ -48,8 +48,8 @@ int main() {
 	cout << "ADFASDF" << endl;
 	b2.print();
 	*/
-	int q;
-	cin >> q;
+	//int q;
+	//cin >> q;
 
 	return 0;
 }

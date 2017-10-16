@@ -11,11 +11,6 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	board[1][3] = 'B';
 	board[2][3] = 'C';
 	board[3][3] = 'a';
-	/*moves.try_emplace(Direction::RIGHT, Coord(1, 0));
-	moves.try_emplace(Direction::LEFT, Coord(-1, 0));
-	moves.try_emplace(Direction::UP, Coord(0, -1));
-	moves.try_emplace(Direction::DOWN, Coord(0, 1));
-	*/
 }
 
 bool BlocksWorldBoard::isSolved() {
@@ -24,15 +19,11 @@ bool BlocksWorldBoard::isSolved() {
 		board[1][3] == 'C');
 }
 
-bool BlocksWorldBoard::isValid(Direction dir) {
-	return validMoves[dir];
-}
-
 void BlocksWorldBoard::checkMoves() {
-	validMoves[Direction::RIGHT] = (agent.x != BOARD_SIZE - 1);
-	validMoves[Direction::LEFT] = (agent.x != 0);
-	validMoves[Direction::DOWN] = (agent.y != BOARD_SIZE - 1);
-	validMoves[Direction::UP] = (agent.y != 0);
+	validMoves[static_cast<int>(Direction::RIGHT)] = (agent.x != BOARD_SIZE - 1);
+	validMoves[static_cast<int>(Direction::LEFT)] = (agent.x != 0);
+	validMoves[static_cast<int>(Direction::DOWN)] = (agent.y != BOARD_SIZE - 1);
+	validMoves[static_cast<int>(Direction::UP)] = (agent.y != 0);
 }
 
 Coord BlocksWorldBoard::moves(Direction dir) {

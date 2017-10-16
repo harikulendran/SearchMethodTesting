@@ -7,7 +7,7 @@ using namespace std;
 
 const static int BOARD_SIZE = 4;
 
-enum class Direction { LEFT, UP, RIGHT, DOWN, NA };
+enum class Direction { LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3, NA = 4 };
 
 class Coord {
 	public:
@@ -20,10 +20,9 @@ class BlocksWorldBoard {
 	public:
 		BlocksWorldBoard();
 		~BlocksWorldBoard() = default;
-		map<Direction, bool> validMoves;
+		bool validMoves[4];
 		bool isSolved();
 		void checkMoves();
-		bool isValid(Direction dir);
 		void move(Direction dir);
 		void print();
 		Coord moves(Direction dir);
