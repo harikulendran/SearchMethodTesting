@@ -27,7 +27,7 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			BlocksWorldBoard newBoard = BlocksWorldBoard(current.state);
 			newBoard.move(static_cast<Direction>(i));
 			//tree->addNode(current.thisNode, tree->getNode(current.thisNode)->depth + 1);
-			treeNodes.push(NodeState{ ++nodeIndex, current.thisNode, newBoard, current.depth+1 });
+			treeNodes.push(NodeState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth+1 });
 
 			//when solution is found, stop
 			if (newBoard.isSolved()) {

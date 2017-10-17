@@ -1,34 +1,34 @@
 #include "AStar.h"
 #include <cmath>
 
-bool LessThanByHeuristic::operator()(const NodeState* lhs, const NodeState* rhs) const {
-	return lhs->h > rhs->h;
+bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) const {
+	return lhs.h > rhs.h;
 }
 
 AStar::AStar() {
 }
 
 void AStar::search() {
-	NodeState* root = new NodeState{0};
-	calculateF(root,nullptr);
-	nodes.push(root);
-//	cout << root->h << endl;
+	NodeState root{0};
+	calculateF(&root);
+	nodes.push(move(root));
 	current = nodes.top();
 
-	while (!current->state.isSolved()) {
+	while (!nodes.empty()) {
+		if (current.state.isSolved())
+			break;
 		nodes.pop();
 
-		current->state.checkMoves();
+		current.state.checkMoves();
 		for (int i = 0; i < 4; i++) {
-			if (current->state.validMoves[i]) {
-				BlocksWorldBoard newBoard = BlocksWorldBoard{ current->state };
+			if (current.state.validMoves[i]) {
+				BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
 				newBoard.move(static_cast<Direction>(i));
-				NodeState* newState = new NodeState{ ++nodeIndex, current->thisNode, move(newBoard), current->depth + 1 };
-				calculateF(newState,current);
-				nodes.push(newState);
+				NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
+				calculateF(&newState);
+				nodes.push(move(newState));
 			}
 		}
-		delete current;
 		current = nodes.top();
 	}
 
@@ -37,7 +37,7 @@ void AStar::search() {
 	current->state.print();*/
 }
 
-void AStar::calculateF(NodeState* ns, NodeState* previous) {
+void AStar::calculateF(NodeState* ns) {
 	Coord A, B, C;
 	Coord sA{ 1,1 }, sB{ 1,2 }, sC{ 1,3 };
 
@@ -47,17 +47,7 @@ void AStar::calculateF(NodeState* ns, NodeState* previous) {
 		abs(sB.x - B.x) + abs(sB.x - B.x) +
 		abs(sC.x - C.x) + abs(sC.x - C.x);
 
-
-	if (previous == nullptr) {
-		ns->G = 0;
-	} else {
-		ns->G = ns->depth;
-		//abs(pA.x - A.x) + abs(pA.y - A.y) +
-		//abs(pB.x - B.x) + abs(pB.x - B.x) +
-		//abs(pC.x - C.x) + abs(pC.x - C.x) + previous->G;
-	}
-
-	ns->h = H + ns->G;
+	ns->h = H + ns->depth;
 }
 
 void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c) {

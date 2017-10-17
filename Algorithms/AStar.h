@@ -8,13 +8,13 @@ using namespace std;
 
 struct LessThanByHeuristic {
 	public:
-		bool operator()(const NodeState* lhs, const NodeState* rhs) const;
+		bool operator()(const NodeState lhs, const NodeState rhs) const;
 };
 
 class AStar {
 	public:
-		NodeState* current;
-		priority_queue<NodeState*, vector<NodeState*>, LessThanByHeuristic> nodes;
+		NodeState current;
+		priority_queue<NodeState, vector<NodeState>, LessThanByHeuristic> nodes;
 		int nodeIndex = 0;
 
 	public:
@@ -22,6 +22,6 @@ class AStar {
 
 	public:
 		void search();
-		void calculateF(NodeState* ns, NodeState* previous);
+		void calculateF(NodeState* ns);
 		void getCoords(NodeState* n, Coord* a, Coord* b, Coord* c);
 };

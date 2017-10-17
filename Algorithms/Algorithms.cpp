@@ -9,16 +9,16 @@ using namespace std;
 
 int main() {
 	__int64 total = 0;
-	int testno = 1000;
+	int testno = 10;
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
 		//DepthFirstSearch d{};
 		//d.search();
 		//d.iterativeSearch(0,25,1);
-		//BreadthFirstSearch b{};
-		//b.search();
-		AStar a{};
-		a.search();
+		BreadthFirstSearch b{};
+		b.search();
+		//AStar a{};
+		//a.search();
 		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
  
 		total += dur.count();
