@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stack>
-#include "Tree.h"
 #include "BlocksWorldBoard.h"
 #include "NodeState.h"
 
@@ -11,7 +10,6 @@ class DepthFirstSearch {
 	public:
 		stack<NodeState> visitedNodes;
 		BlocksWorldBoard bwBoard{};
-		//shared_ptr<Tree> tree;
 		NodeState currentNode;
 		int depth = 1;
 		int nodeIndex = 0;
@@ -19,6 +17,5 @@ class DepthFirstSearch {
 		void search();
 		bool search(int maxDepth);
 		void iterativeSearch(int initDepth, int maxDepth, int interval);
-		void addRandomAdjacentNode(int noOfValidMoves);
-		int getNoOfValidMoves();
+		void addRandomAdjacentNode();
 };

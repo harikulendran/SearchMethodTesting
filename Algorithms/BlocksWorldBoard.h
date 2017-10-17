@@ -13,7 +13,7 @@ class Coord {
 	public:
 		int x;
 		int y;
-		Coord(int acoord, int bcoord);
+		Coord(int acoord = 0, int bcoord = 0);
 };
 
 class BlocksWorldBoard {
@@ -26,7 +26,7 @@ class BlocksWorldBoard {
 		void move(Direction dir);
 		void print();
 		Coord moves(Direction dir);
-	private:
 		char board[BOARD_SIZE][BOARD_SIZE] = {};
+	private:
 		Coord agent{ 3,3 };
 };

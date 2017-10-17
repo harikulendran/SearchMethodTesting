@@ -1,7 +1,7 @@
 #include <iostream>
 #include "BlocksWorldBoard.h"
 
-Coord::Coord(int acoord = 0, int bcoord = 0) : x(acoord), y(bcoord) {}
+Coord::Coord(int acoord, int bcoord) : x(acoord), y(bcoord) {}
 
 BlocksWorldBoard::BlocksWorldBoard() {
 	for (int i = 0; i < BOARD_SIZE; i++)
