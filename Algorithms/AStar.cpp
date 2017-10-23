@@ -8,7 +8,7 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 AStar::AStar() {
 }
 
-void AStar::search() {
+void AStar::search(int q, int w, int e, int r) {
 	int count = 1;
 	NodeState root{0};
 	calculateF(&root);
@@ -24,14 +24,33 @@ void AStar::search() {
 		count++;
 
 		current.state.checkMoves();
-		for (int i = 0; i < 4; i++) {
-			if (current.state.validMoves[i]) {
-				BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
-				newBoard.move(static_cast<Direction>(i));
-				NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
-				calculateF(&newState);
-				nodes.push(move(newState));
-			}
+		if (current.state.validMoves[q]) {
+			BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
+			newBoard.move(static_cast<Direction>(q));
+			NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
+			calculateF(&newState);
+			nodes.push(move(newState));
+		}
+		if (current.state.validMoves[w]) {
+			BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
+			newBoard.move(static_cast<Direction>(w));
+			NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
+			calculateF(&newState);
+			nodes.push(move(newState));
+		}
+		if (current.state.validMoves[e]) {
+			BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
+			newBoard.move(static_cast<Direction>(e));
+			NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
+			calculateF(&newState);
+			nodes.push(move(newState));
+		}
+		if (current.state.validMoves[r]) {
+			BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
+			newBoard.move(static_cast<Direction>(r));
+			NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
+			calculateF(&newState);
+			nodes.push(move(newState));
 		}
 		current = nodes.top();
 	}

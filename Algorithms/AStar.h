@@ -21,7 +21,7 @@ class AStar {
 		AStar();
 
 	public:
-		void search();
+		void search(int q, int w, int e, int r);
 		void calculateF(NodeState* ns);
 		void getCoords(NodeState* n, Coord* a, Coord* b, Coord* c);
 };
