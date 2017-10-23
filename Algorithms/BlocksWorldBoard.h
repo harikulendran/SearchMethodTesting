@@ -7,7 +7,7 @@ using namespace std;
 
 const static int BOARD_SIZE = 4;
 
-enum class Direction { LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3, NA = 4 };
+enum class Direction { UP = 0, LEFT = 1, RIGHT = 2, DOWN = 3, NA = 4 };
 
 class Coord {
 	public:

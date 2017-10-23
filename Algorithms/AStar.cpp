@@ -9,15 +9,19 @@ AStar::AStar() {
 }
 
 void AStar::search() {
+	int count = 1;
 	NodeState root{0};
 	calculateF(&root);
 	nodes.push(move(root));
 	current = nodes.top();
 
 	while (!nodes.empty()) {
-		if (current.state.isSolved())
+		if (current.state.isSolved()) {
+			cout << "No of nodes: " << nodes.size() << endl << "no of expanded: " << count << endl;
 			break;
+		}
 		nodes.pop();
+		count++;
 
 		current.state.checkMoves();
 		for (int i = 0; i < 4; i++) {
