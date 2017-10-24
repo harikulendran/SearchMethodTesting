@@ -18,9 +18,13 @@ void AStar::search() {
 	while (!nodes.empty()) {
 		if (current.state.isSolved()) {
 			cout << "No of nodes: " << nodes.size() << endl << "no of expanded: " << count << endl;
+			cout << current.depth << endl;
 			break;
 		}
 		nodes.pop();
+		/*if (current.depth < 5) {
+			cout << current.depth << " -> " << current.G << endl;
+		}*/
 		count++;
 
 		current.state.checkMoves();
@@ -42,14 +46,16 @@ void AStar::search() {
 }
 
 void AStar::calculateF(NodeState* ns) {
-	Coord A, B, C;
+	Coord A, B, C, a;
 	Coord sA{ 1,1 }, sB{ 1,2 }, sC{ 1,3 };
 
 	getCoords(ns, &A, &B, &C);
 
 	int H = abs(sA.x - A.x) + abs(sA.y - A.y) +
-		abs(sB.x - B.x) + abs(sB.x - B.x) +
-		abs(sC.x - C.x) + abs(sC.x - C.x);
+		abs(sB.x - B.x) + abs(sB.y - B.y) +
+		abs(sC.x - C.x) + abs(sC.y - C.y);
+
+	ns->G = H;
 
 	ns->h = H + ns->depth;
 }

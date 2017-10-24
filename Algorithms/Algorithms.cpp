@@ -19,13 +19,13 @@ int main() {
 		//b.search();
 		AStar a{};
 		a.search();
-		auto dur = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start);
+		auto dur = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now() - start);
  
 		total += dur.count();
 			
 		//cout << "time: " << dur.count() << endl;
 	}
-	cout << "Avg time taken: " << (double)total / (double)testno << "ms" << endl;
+	cout << "Avg time taken: " << (double)total / (double)testno << "ns" << endl;
 	
 	//int q;
 	//cin >> q;

@@ -33,6 +33,7 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			if (newBoard.isSolved()) {
 				complete = true;
 				completeNode = treeNodes.back();
+				cout << completeNode.depth << endl;
 				return;
 			}
 		}

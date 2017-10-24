@@ -16,7 +16,8 @@ BlocksWorldBoard::BlocksWorldBoard() {
 bool BlocksWorldBoard::isSolved() {
 	return (board[1][1] == 'A' &&
 		board[1][2] == 'B' &&
-		board[1][3] == 'C');
+		board[1][3] == 'C' &&
+		board[3][3] == 'a');
 }
 
 void BlocksWorldBoard::checkMoves() {
