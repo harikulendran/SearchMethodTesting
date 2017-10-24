@@ -57,7 +57,7 @@ void AStar::calculateF(NodeState* ns) {
 
 	ns->G = H;
 
-	ns->h = H + ns->depth;
+	ns->h = H * ns->depth;
 }
 
 void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c) {
