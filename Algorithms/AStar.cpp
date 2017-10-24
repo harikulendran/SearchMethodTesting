@@ -47,20 +47,23 @@ void AStar::search() {
 
 void AStar::calculateF(NodeState* ns) {
 	Coord A, B, C, a;
-	Coord sA{ 1,1 }, sB{ 1,2 }, sC{ 1,3 };
+	Coord sA{ 1,1 }, sB{ 1,2 }, sC{ 1,3 }, sa{ 3,3 };
 
-	getCoords(ns, &A, &B, &C);
+	getCoords(ns, &A, &B, &C, &a);
 
 	int H = abs(sA.x - A.x) + abs(sA.y - A.y) +
 		abs(sB.x - B.x) + abs(sB.y - B.y) +
 		abs(sC.x - C.x) + abs(sC.y - C.y);
 
+	//if (H==0)
+		//H = abs(sa.x - a.x) + abs(sa.y - a.y);
+
 	ns->G = H;
 
-	ns->h = H * ns->depth;
+	ns->h = H + ns->depth;
 }
 
-void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c) {
+void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c, Coord* aa) {
 	for (int j=0; j<4; j++)
 		for (int i = 0; i < 4; i++) {
 			if (n->state.board[i][j] == 'A') {
@@ -72,6 +75,10 @@ void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c) {
 			} else if (n->state.board[i][j] == 'C') {
 				c->x = i;
 				c->y = j;
+			}
+			else if (n->state.board[i][j] == 'a') {
+				aa->x = i;
+				aa->y = j;
 			}
 		}
 }
