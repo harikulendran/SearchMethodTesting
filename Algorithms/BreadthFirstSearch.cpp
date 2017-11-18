@@ -10,7 +10,7 @@ SearchOutput BreadthFirstSearch::search() {
 		addCurrentNodeEdges();
 	output.solnDepth = completeNode.depth;
 	output.isOptimal = (output.solnDepth == 14);
-	output.nodesExpanded = treeNodes.size();
+	output.nodesInMemory = treeNodes.size();
 	return output;
 	/*cout << "Depth: " << completeNode.depth << endl;
 	completeNode.state.print();
