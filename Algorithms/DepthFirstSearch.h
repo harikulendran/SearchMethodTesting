@@ -8,14 +8,16 @@ using namespace std;
 
 class DepthFirstSearch {
 	public:
+		SearchOutput output{};
 		stack<NodeState> visitedNodes;
 		BlocksWorldBoard bwBoard{};
 		NodeState currentNode;
 		int depth = 1;
 		int nodeIndex = 0;
-		DepthFirstSearch();
-		void search();
-		bool search(int maxDepth);
-		void iterativeSearch(int initDepth, int maxDepth, int interval);
+		bool complete = false;
+		DepthFirstSearch(int ir = 0);
+		SearchOutput search();
+		SearchOutput search(int maxDepth);
+		SearchOutput iterativeSearch(int initDepth, int maxDepth, int interval);
 		void addRandomAdjacentNode();
 };

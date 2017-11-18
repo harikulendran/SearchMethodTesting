@@ -8,7 +8,7 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 AStar::AStar() {
 }
 
-void AStar::search() {
+SearchOutput AStar::search() {
 	int count = 1;
 	NodeState root{0};
 	calculateF(&root);
@@ -17,11 +17,15 @@ void AStar::search() {
 
 	while (!nodes.empty()) {
 		if (current.state.isSolved()) {
+			output.solnDepth = current.depth;
+			output.isOptimal = (output.solnDepth == 14);
+			output.nodesInMemory = nodes.size();
 			//cout << "No of nodes: " << nodes.size() << endl << "no of expanded: " << count << endl;
 			//cout << current.depth << endl;
 			break;
 		}
 		nodes.pop();
+		output.nodesExpanded++;
 		/*if (current.depth < 5) {
 			cout << current.depth << " -> " << current.G << endl;
 		}*/
@@ -38,8 +42,10 @@ void AStar::search() {
 			}
 		}
 		current = nodes.top();
+		output.maxNodesInMemory = (output.maxNodesInMemory < nodes.size()) ? nodes.size() : output.maxNodesInMemory;
 	}
 
+	return output;
 	/*cout << current->depth << endl;
 	cout << "Nodes in fringe: " << nodes.size() << endl;
 	current->state.print();*/

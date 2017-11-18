@@ -5,9 +5,13 @@ BreadthFirstSearch::BreadthFirstSearch() {
 	treeNodes.push(NodeState{ 0,-1,BlocksWorldBoard{} });
 }
 
-void BreadthFirstSearch::search() {
+SearchOutput BreadthFirstSearch::search() {
 	while (!complete)
 		addCurrentNodeEdges();
+	output.solnDepth = completeNode.depth;
+	output.isOptimal = (output.solnDepth == 14);
+	output.nodesExpanded = treeNodes.size();
+	return output;
 	/*cout << "Depth: " << completeNode.depth << endl;
 	completeNode.state.print();
 	cout << "Printing Steps:" << endl;*/
@@ -18,6 +22,8 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 	//get the earliest node and remove it from the queue
 	NodeState current = treeNodes.front();
 	treeNodes.pop();
+	output.nodesExpanded++;
+	output.maxNodesInMemory = (output.maxNodesInMemory < treeNodes.size()) ? treeNodes.size() : output.maxNodesInMemory;
 
 	//expand the available directions
 	current.state.checkMoves();
@@ -26,14 +32,13 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			//save the state of the board at each node and add them to the queue
 			BlocksWorldBoard newBoard = BlocksWorldBoard(current.state);
 			newBoard.move(static_cast<Direction>(i));
-			//tree->addNode(current.thisNode, tree->getNode(current.thisNode)->depth + 1);
 			treeNodes.push(NodeState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth+1 });
 
 			//when solution is found, stop
 			if (newBoard.isSolved()) {
 				complete = true;
 				completeNode = treeNodes.back();
-				cout << completeNode.depth << endl;
+				//cout << treeNodes.size() << endl;
 				return;
 			}
 		}

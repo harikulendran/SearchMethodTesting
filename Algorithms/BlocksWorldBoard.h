@@ -7,7 +7,17 @@ using namespace std;
 
 const static int BOARD_SIZE = 4;
 
-enum class Direction { UP = 0, LEFT = 1, RIGHT = 2, DOWN = 3, NA = 4 };
+enum class Direction { UP = 3, LEFT = 2, RIGHT = 1, DOWN = 0, NA = 4 };
+
+class SearchOutput {
+	public:
+		int solnDepth = 0;
+		bool isOptimal = false;
+		int nodesInMemory = 0;
+		int maxNodesInMemory = 0;
+		int nodesExpanded = 0;
+		__int64 realWorldTime;
+};
 
 class Coord {
 	public:

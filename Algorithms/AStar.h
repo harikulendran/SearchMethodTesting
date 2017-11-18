@@ -13,6 +13,7 @@ struct LessThanByHeuristic {
 
 class AStar {
 	public:
+		SearchOutput output{};
 		NodeState current;
 		priority_queue<NodeState, vector<NodeState>, LessThanByHeuristic> nodes;
 		int nodeIndex = 0;
@@ -21,7 +22,7 @@ class AStar {
 		AStar();
 
 	public:
-		void search();
+		SearchOutput search();
 		void calculateF(NodeState* ns);
 		void getCoords(NodeState* n, Coord* a, Coord* b, Coord* c);
 };

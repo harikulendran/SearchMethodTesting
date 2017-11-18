@@ -10,13 +10,13 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	board[0][3] = 'A';
 	board[1][3] = 'B';
 	board[2][3] = 'C';
-	board[7][7] = 'a';
+	board[3][3] = 'a';
 }
 
 bool BlocksWorldBoard::isSolved() {
 	return (board[1][1] == 'A' &&
-		board[1][2] == 'B' &&
-		board[1][3] == 'C');
+			board[1][2] == 'B' &&
+			board[1][3] == 'C');
 }
 
 void BlocksWorldBoard::checkMoves() {
