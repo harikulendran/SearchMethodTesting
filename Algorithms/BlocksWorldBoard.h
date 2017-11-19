@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const static int BOARD_SIZE = 7;
+const static int BOARD_SIZE = 4;
 const static string goals("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 enum class Direction { UP = 3, LEFT = 2, RIGHT = 1, DOWN = 0, NA = 4 };
