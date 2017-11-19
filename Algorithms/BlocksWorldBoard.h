@@ -5,7 +5,8 @@
 
 using namespace std;
 
-const static int BOARD_SIZE = 4;
+const static int BOARD_SIZE = 6;
+const static string goals("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 enum class Direction { UP = 3, LEFT = 2, RIGHT = 1, DOWN = 0, NA = 4 };
 
@@ -15,7 +16,7 @@ class SearchOutput {
 		bool isOptimal = false;
 		int nodesInMemory = 0;
 		int maxNodesInMemory = 0;
-		int nodesExpanded = 0;
+		__int64 nodesExpanded = 0;
 		__int64 realWorldTime;
 };
 
@@ -38,5 +39,5 @@ class BlocksWorldBoard {
 		Coord moves(Direction dir);
 		char board[BOARD_SIZE][BOARD_SIZE] = {};
 	private:
-		Coord agent{ 3,3 };
+		Coord agent{ BOARD_SIZE - 1,BOARD_SIZE - 1 };
 };

@@ -42,10 +42,10 @@ SearchOutput DepthFirstSearch::search(int maxDepth) {
 		}
 	}
 	complete = currentNode.state.isSolved();
-	//output.solnDepth = currentNode.depth;
-	//output.isOptimal = (output.solnDepth == 14);
-	//output.nodesInMemory = visitedNodes.size();
-	//output.maxNodesInMemory = output.nodesInMemory;
+	output.solnDepth = currentNode.depth;
+	output.isOptimal = (output.solnDepth == 14);
+	output.nodesInMemory = visitedNodes.size();
+	output.maxNodesInMemory = output.nodesInMemory;
 	/*if (currentNode.state.isSolved()) {
 		cout << "Depth reached: " << currentNode.depth << endl;
 		cout << "Number of nodes in memory: " << visitedNodes.size() << endl;

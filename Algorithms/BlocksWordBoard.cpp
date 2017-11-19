@@ -7,16 +7,27 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	for (int i = 0; i < BOARD_SIZE; i++)
 		for (int j = 0; j < BOARD_SIZE; j++)
 			board[i][j] = '.';
-	board[0][3] = 'A';
-	board[1][3] = 'B';
-	board[2][3] = 'C';
-	board[3][3] = 'a';
+	//for (int i = 0; i < 4 - 1; i++)
+	//	board[i][BOARD_SIZE - 1] = goals[i];
+	board[0][BOARD_SIZE - 1] = 'A';
+	board[1][BOARD_SIZE - 1] = 'B';
+	board[2][BOARD_SIZE - 1] = 'C';
+	board[BOARD_SIZE-1][BOARD_SIZE-1] = 'a';
+	//print();
 }
 
 bool BlocksWorldBoard::isSolved() {
-	return (board[1][1] == 'A' &&
-			board[1][2] == 'B' &&
-			board[1][3] == 'C');
+	/*bool solved = true;
+	for (int i = 0; i < 3 - 1; i++) {
+		if (board[1][BOARD_SIZE-3] != goals[i])
+			solved = false;
+		//solved &= (board[1][i + 1] == goals[i]);
+		//cout << (board[1][i + 1] == goals[i]);
+	}
+	return solved;*/
+	return (board[1][BOARD_SIZE - 3] == 'A' &&
+			board[1][BOARD_SIZE - 2] == 'B' &&
+			board[1][BOARD_SIZE - 1] == 'C');
 }
 
 void BlocksWorldBoard::checkMoves() {

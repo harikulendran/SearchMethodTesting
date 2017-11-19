@@ -11,12 +11,17 @@ using namespace std;
 
 int main() {
 	__int64 total = 0;
-	int testno = 1000;
+	int testno = 10;
 	SearchOutput output;
 
+	ifstream f(string("outputFile.csv").c_str());
+	bool start = f.good();
 	ofstream outputFile;
-	outputFile.open("outputFile.csv");
-	outputFile << "NO,Solution Depth,Nodes In Memory,Max Nodes in Memory,Nodes Expanded,Optimal Solution,Real World Time\n";
+	outputFile.open("outputFile.csv", ios::out | ios::app);
+
+	if (!start)
+		outputFile << "NO,Solution Depth,Nodes In Memory,Max Nodes in Memory,Nodes Expanded,Optimal Solution,Real World Time\n";
+
 	string outputString = "";
 
 	for (int i = 0; i < testno; i++) {
@@ -24,10 +29,10 @@ int main() {
 		//DepthFirstSearch d{i+1};
 		//output = d.search();
 		//output = d.iterativeSearch(0,25,1);
-		BreadthFirstSearch b{};
-		output = b.search();
-		//AStar a{};
-		//output = a.search();
+		//BreadthFirstSearch b{};
+		//output = b.search();
+		AStar a{};
+		output = a.search();
 		auto dur = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now() - start);
 		output.realWorldTime = dur.count();
 
@@ -38,14 +43,12 @@ int main() {
 
 		total += dur.count();
 			
-		//cout << "time: " << dur.count() << endl;
+		cout << "time: " << dur.count() << endl;
 	}
 	outputFile << outputString;
+	outputFile << "\n";
 	outputFile.close();
 	cout << "Avg time taken: " << (double)total / (double)testno << "ns" << endl;
 	
-	//int q;
-	//cin >> q;
-
 	return 0;
 }
