@@ -36,7 +36,7 @@ SearchOutput DepthFirstSearch::search(int maxDepth) {
 		}
 		else {
 			visitedNodes.pop();
-			output.nodesExpanded++;
+			//output.nodesExpanded++;
 			if (!visitedNodes.empty())
 				currentNode = visitedNodes.top();
 		}
@@ -69,4 +69,5 @@ void DepthFirstSearch::addRandomAdjacentNode() {
 				currentNode = visitedNodes.top();
 		}
 	}
+	output.nodesExpanded++;
 }

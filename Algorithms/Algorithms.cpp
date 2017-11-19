@@ -26,13 +26,13 @@ int main() {
 
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
-		//DepthFirstSearch d{i+1};
-		//output = d.search();
+		DepthFirstSearch d{i+1};
+		output = d.search();
 		//output = d.iterativeSearch(0,25,1);
 		//BreadthFirstSearch b{};
 		//output = b.search();
-		AStar a{};
-		output = a.search();
+		//AStar a{};
+		//output = a.search();
 		auto dur = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now() - start);
 		output.realWorldTime = dur.count();
 
