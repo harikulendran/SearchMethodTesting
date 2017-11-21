@@ -9,7 +9,7 @@ AStar::AStar() {
 }
 
 SearchOutput AStar::search() {
-	int count = 1;
+	//add the root node and calculate its 
 	NodeState root{0};
 	calculateF(&root);
 	nodes.push(move(root));
@@ -20,16 +20,9 @@ SearchOutput AStar::search() {
 			output.solnDepth = current.depth;
 			output.isOptimal = (output.solnDepth == 14);
 			output.nodesInMemory = nodes.size();
-			//cout << "No of nodes: " << nodes.size() << endl << "no of expanded: " << count << endl;
-			//cout << current.depth << endl;
 			break;
 		}
 		nodes.pop();
-		output.nodesExpanded++;
-		/*if (current.depth < 5) {
-			cout << current.depth << " -> " << current.G << endl;
-		}*/
-		count++;
 
 		current.state.checkMoves();
 		for (int i = 0; i < 4; i++) {
@@ -41,61 +34,40 @@ SearchOutput AStar::search() {
 				nodes.push(move(newState));
 			}
 		}
+		output.nodesExpanded++;
 		current = nodes.top();
 		output.maxNodesInMemory = (output.maxNodesInMemory < nodes.size()) ? nodes.size() : output.maxNodesInMemory;
 	}
 
 	return output;
-	/*cout << current->depth << endl;
-	cout << "Nodes in fringe: " << nodes.size() << endl;
-	current->state.print();*/
 }
 
 void AStar::calculateF(NodeState* ns) {
-	Coord A, B, C, a;
-	Coord sA{ 1,1 }, sB{ 1,2 }, sC{ 1,3 };
+	Coord pieces[NO_OF_PIECES];
+	getCoords(ns, pieces);
 
-	getCoords(ns, &A, &B, &C);
-
-	int H = abs(sA.x - A.x) + abs(sA.y - A.y) +
-		abs(sB.x - B.x) + abs(sB.y - B.y) +
-		abs(sC.x - C.x) + abs(sC.y - C.y);
+	int H = calculateH(pieces);
 
 	ns->G = H;
 
 	ns->h = H+ns->depth;
 }
 
-void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c) {
-	for (int j=0; j < BOARD_SIZE; j++)
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			if (n->state.board[i][j] == 'A') {
-				a->x = i;
-				a->y = j;
-			} else if (n->state.board[i][j] == 'B') {
-				b->x = i;
-				b->y = j;
-			} else if (n->state.board[i][j] == 'C') {
-				c->x = i;
-				c->y = j;
-			}
-		}
+int AStar::calculateH(Coord (&pieces)[NO_OF_PIECES]) {
+	int H = 0;
+	int boardOffset = NO_OF_PIECES;
+	for (int i = 0; i < NO_OF_PIECES; i++)
+		H += abs(1 - pieces[i].x) + abs(BOARD_SIZE - boardOffset-- - pieces[i].y);
+	return H;
 }
 
-/*
-void AStar::getCoords(NodeState* n, Coord* a, Coord* b, Coord* c) {
-	for (int j=0; j<4; j++)
-		for (int i = 0; i < 4; i++) {
-			if (n->state.board[i][j] == 'A') {
-				a->x = i;
-				a->y = j;
-			} else if (n->state.board[i][j] == 'B') {
-				b->x = i;
-				b->y = j;
-			} else if (n->state.board[i][j] == 'C') {
-				c->x = i;
-				c->y = j;
-			}
+void AStar::getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]) {
+	for (int j=0; j < BOARD_SIZE; j++)
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int k = 0; k<NO_OF_PIECES; k++)
+				if (n->state.board[i][j] == goals[k]) {
+					pieces[k].x = i;
+					pieces[k].y = j;
+				}
 		}
 }
-*/

@@ -4,30 +4,22 @@
 Coord::Coord(int acoord, int bcoord) : x(acoord), y(bcoord) {}
 
 BlocksWorldBoard::BlocksWorldBoard() {
+	//set the board to blank
 	for (int i = 0; i < BOARD_SIZE; i++)
 		for (int j = 0; j < BOARD_SIZE; j++)
 			board[i][j] = '.';
-	//for (int i = 0; i < 4 - 1; i++)
-	//	board[i][BOARD_SIZE - 1] = goals[i];
-	board[0][BOARD_SIZE - 1] = 'A';
-	board[1][BOARD_SIZE - 1] = 'B';
-	board[2][BOARD_SIZE - 1] = 'C';
-	board[BOARD_SIZE-1][BOARD_SIZE-1] = 'a';
-	//print();
+	//add the pieces in the start state
+	for (int i = 0; i < NO_OF_PIECES; i++)
+		board[i][BOARD_SIZE - 1] = goals[i];
 }
 
 bool BlocksWorldBoard::isSolved() {
-	/*bool solved = true;
-	for (int i = 0; i < 3 - 1; i++) {
-		if (board[1][BOARD_SIZE-3] != goals[i])
-			solved = false;
-		//solved &= (board[1][i + 1] == goals[i]);
-		//cout << (board[1][i + 1] == goals[i]);
-	}
-	return solved;*/
-	return (board[1][BOARD_SIZE - 3] == 'A' &&
-			board[1][BOARD_SIZE - 2] == 'B' &&
-			board[1][BOARD_SIZE - 1] == 'C');
+	bool solved = true;
+	int boardOffset = NO_OF_PIECES;
+	//check all the pieces are in the correct goal position
+	for (int i = 0; i < NO_OF_PIECES; i++)
+		solved &= (board[1][BOARD_SIZE - boardOffset--] == goals[i]);
+	return solved;
 }
 
 void BlocksWorldBoard::checkMoves() {
