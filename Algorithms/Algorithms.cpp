@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
 	__int64 total = 0;
-	int testno = 1;
+	int testno = 10;
 	SearchOutput output;
 
 	ifstream f(string("DATA/outputFile.csv").c_str());

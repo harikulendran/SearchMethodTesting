@@ -15,8 +15,12 @@ class BreadthFirstSearch {
 		queue <NodeState> treeNodes{};
 		int nodeIndex = 0;
 		NodeState completeNode;
+
+	public:
 		BreadthFirstSearch();
 		~BreadthFirstSearch() = default;
+
+	public:
 		SearchOutput search();
 		void addCurrentNodeEdges();
 		void showSolution();

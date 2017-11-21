@@ -15,7 +15,11 @@ class DepthFirstSearch {
 		int depth = 1;
 		int nodeIndex = 0;
 		bool complete = false;
+
+	public:
 		DepthFirstSearch(int ir = 0);
+
+	public:
 		SearchOutput search();
 		SearchOutput search(int maxDepth);
 		SearchOutput iterativeSearch(int initDepth, int maxDepth, int interval);

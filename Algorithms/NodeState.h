@@ -13,5 +13,7 @@ class NodeState {
 		int depth;
 		BlocksWorldBoard state;
 		bool expanded = false;
+
+	public:
 		NodeState(int n = -1, int p = -1, BlocksWorldBoard s = BlocksWorldBoard{}, int d = 0);
 };

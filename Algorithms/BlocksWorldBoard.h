@@ -24,20 +24,27 @@ class Coord {
 	public:
 		int x;
 		int y;
+
+	public:
 		Coord(int acoord = 0, int bcoord = 0);
 };
 
 class BlocksWorldBoard {
 	public:
+		Coord moves(Direction dir);
+		char board[BOARD_SIZE][BOARD_SIZE] = {};
+		bool validMoves[4];
+
+	public:
 		BlocksWorldBoard();
 		~BlocksWorldBoard() = default;
-		bool validMoves[4];
+
+	public:
 		bool isSolved();
 		void checkMoves();
 		void move(Direction dir);
 		void print();
-		Coord moves(Direction dir);
-		char board[BOARD_SIZE][BOARD_SIZE] = {};
-	private:
+	
+private:
 		Coord agent{ BOARD_SIZE - 1,BOARD_SIZE - 1 };
 };
