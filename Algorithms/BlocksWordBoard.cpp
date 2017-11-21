@@ -17,17 +17,14 @@ BlocksWorldBoard::BlocksWorldBoard() {
 }
 
 bool BlocksWorldBoard::isSolved() {
-	/*bool solved = true;
-	for (int i = 0; i < 3 - 1; i++) {
-		if (board[1][BOARD_SIZE-3] != goals[i])
-			solved = false;
-		//solved &= (board[1][i + 1] == goals[i]);
-		//cout << (board[1][i + 1] == goals[i]);
-	}
-	return solved;*/
-	return (board[1][BOARD_SIZE - 3] == 'A' &&
-			board[1][BOARD_SIZE - 2] == 'B' &&
-			board[1][BOARD_SIZE - 1] == 'C');
+	bool solved = true;
+	int boardOffset = 3;
+	for (int i = 0; i < NO_OF_PIECES; i++)
+		solved &= (board[1][BOARD_SIZE - boardOffset--] == goals[i]);
+	return solved;
+	//return (board[1][BOARD_SIZE - 3] == 'A' &&
+		//	board[1][BOARD_SIZE - 2] == 'B' &&
+			//board[1][BOARD_SIZE - 1] == 'C');
 }
 
 void BlocksWorldBoard::checkMoves() {

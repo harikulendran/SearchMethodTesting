@@ -9,7 +9,7 @@ AStar::AStar() {
 }
 
 SearchOutput AStar::search() {
-	int count = 1;
+	//add the root node and calculate its 
 	NodeState root{0};
 	calculateF(&root);
 	nodes.push(move(root));
@@ -20,16 +20,9 @@ SearchOutput AStar::search() {
 			output.solnDepth = current.depth;
 			output.isOptimal = (output.solnDepth == 14);
 			output.nodesInMemory = nodes.size();
-			//cout << "No of nodes: " << nodes.size() << endl << "no of expanded: " << count << endl;
-			//cout << current.depth << endl;
 			break;
 		}
 		nodes.pop();
-		output.nodesExpanded++;
-		/*if (current.depth < 5) {
-			cout << current.depth << " -> " << current.G << endl;
-		}*/
-		count++;
 
 		current.state.checkMoves();
 		for (int i = 0; i < 4; i++) {
@@ -41,6 +34,7 @@ SearchOutput AStar::search() {
 				nodes.push(move(newState));
 			}
 		}
+		output.nodesExpanded++;
 		current = nodes.top();
 		output.maxNodesInMemory = (output.maxNodesInMemory < nodes.size()) ? nodes.size() : output.maxNodesInMemory;
 	}
