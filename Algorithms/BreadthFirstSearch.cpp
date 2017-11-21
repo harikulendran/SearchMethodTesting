@@ -12,10 +12,6 @@ SearchOutput BreadthFirstSearch::search() {
 	output.isOptimal = (output.solnDepth == 14);
 	output.nodesInMemory = treeNodes.size();
 	return output;
-	/*cout << "Depth: " << completeNode.depth << endl;
-	completeNode.state.print();
-	cout << "Printing Steps:" << endl;*/
-	//showSolution();
 }
 
 void BreadthFirstSearch::addCurrentNodeEdges() {
@@ -38,24 +34,8 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			if (newBoard.isSolved()) {
 				complete = true;
 				completeNode = treeNodes.back();
-				//cout << treeNodes.size() << endl;
 				return;
 			}
 		}
 	}
 }
-
-/*
-void BreadthFirstSearch::showSolution() {
-	vector<BlocksWorldBoard> sol{};
-	int curInd = completeNode.thisNode;
-	while (curInd != -1) {
-		Node* cn = tree->getNode(curInd);
-		sol.push_back(cn->state);
-		curInd = cn->parentIndex;
-	}
-
-	for (int i = sol.size() - 1; i > -1; i--) {
-		sol[i].print();
-	}
-}*/

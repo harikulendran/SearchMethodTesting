@@ -28,7 +28,7 @@ int main() {
 		auto start = chrono::steady_clock::now();
 		//DepthFirstSearch d{i+1};
 		//output = d.search();
-		//output = d.iterativeSearch(0,25,1);
+		//output = d.iterativeSearch(0,40,1);
 		BreadthFirstSearch b{};
 		output = b.search();
 		//AStar a{};

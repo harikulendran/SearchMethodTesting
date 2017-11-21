@@ -30,12 +30,31 @@ SearchOutput AStar::search() {
 				BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
 				newBoard.move(static_cast<Direction>(i));
 				NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
+				newState.d = static_cast<Direction>(i);
 				calculateF(&newState);
 				nodes.push(move(newState));
 			}
 		}
 		output.nodesExpanded++;
 		current = nodes.top();
+		char s;
+		switch (static_cast<int>(current.d)) {
+		case (0):
+			s = 'L';
+			break;
+		case (1):
+			s = 'R';
+			break;
+		case (2):
+			s = 'U';
+			break;
+		case (3):
+			s = 'D';
+		}
+
+
+		if (output.nodesExpanded < 20)
+			cout << s << " ";
 		output.maxNodesInMemory = (output.maxNodesInMemory < nodes.size()) ? nodes.size() : output.maxNodesInMemory;
 	}
 
@@ -61,6 +80,7 @@ int AStar::calculateH(Coord (&pieces)[NO_OF_PIECES]) {
 	return H;
 }
 
+//get the current position of the pieces
 void AStar::getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]) {
 	for (int j=0; j < BOARD_SIZE; j++)
 		for (int i = 0; i < BOARD_SIZE; i++) {

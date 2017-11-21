@@ -17,10 +17,6 @@ SearchOutput DepthFirstSearch::iterativeSearch(int initDepth, int maxDepth, int 
 		if (complete)
 			break;
 	}
-	output.solnDepth = currentNode.depth;
-	output.isOptimal = (output.solnDepth == 14);
-	output.nodesInMemory = visitedNodes.size();
-	output.maxNodesInMemory = output.nodesInMemory;
 	return output;
 }
 
@@ -36,7 +32,7 @@ SearchOutput DepthFirstSearch::search(int maxDepth) {
 		}
 		else {
 			visitedNodes.pop();
-			//output.nodesExpanded++;
+			output.nodesExpanded++;
 			if (!visitedNodes.empty())
 				currentNode = visitedNodes.top();
 		}
@@ -46,13 +42,6 @@ SearchOutput DepthFirstSearch::search(int maxDepth) {
 	output.isOptimal = (output.solnDepth == 14);
 	output.nodesInMemory = visitedNodes.size();
 	output.maxNodesInMemory = output.nodesInMemory;
-	/*if (currentNode.state.isSolved()) {
-		cout << "Depth reached: " << currentNode.depth << endl;
-		cout << "Number of nodes in memory: " << visitedNodes.size() << endl;
-		//cout << "Number of edges in memory: " << tree->edgeSize() << endl;
-		cout << "Final board: " << endl;
-		currentNode.state.print();
-	}*/
 	return output;
 }
 
