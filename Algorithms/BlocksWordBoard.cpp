@@ -15,7 +15,8 @@ BlocksWorldBoard::BlocksWorldBoard() {
 
 bool BlocksWorldBoard::isSolved() {
 	bool solved = true;
-	int boardOffset = 3;
+	int boardOffset = NO_OF_PIECES;
+	//check all the pieces are in the correct goal position
 	for (int i = 0; i < NO_OF_PIECES; i++)
 		solved &= (board[1][BOARD_SIZE - boardOffset--] == goals[i]);
 	return solved;

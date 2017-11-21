@@ -24,5 +24,6 @@ class AStar {
 	public:
 		SearchOutput search();
 		void calculateF(NodeState* ns);
-		void getCoords(NodeState* n, Coord* a, Coord* b, Coord* c);
+		int calculateH(Coord (&pieces)[NO_OF_PIECES]);
+		void getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]);
 };
