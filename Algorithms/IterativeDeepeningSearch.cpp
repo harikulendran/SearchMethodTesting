@@ -9,7 +9,6 @@ SearchOutput IterativeDeepeningSearch::search(int maxDepth) {
 		if (fringe.size() == 0)
 			fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
 		TreeSearch::search(i);
-		cout << i << " ";
 		if (complete)
 			break;
 	}

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "TreeSearch.h"
-#include "BlocksWorldBoard.h"
-#include "NodeState.h"
 #include <queue>
 
 using namespace std;

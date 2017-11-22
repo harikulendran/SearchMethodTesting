@@ -1,9 +1,7 @@
 #pragma once
 
-#include <stack>
-#include "BlocksWorldBoard.h"
-#include "NodeState.h"
 #include "TreeSearch.h"
+#include <stack>
 
 
 class DepthFirstSearch : public TreeSearch<stack> {
