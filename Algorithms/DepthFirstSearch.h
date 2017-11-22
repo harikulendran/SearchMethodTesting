@@ -3,9 +3,20 @@
 #include <stack>
 #include "BlocksWorldBoard.h"
 #include "NodeState.h"
+#include "TreeSearch.h"
 
 using namespace std;
 
+class DepthFirstSearch : public TreeSearch<stack> {
+public:
+	DepthFirstSearch(int i = 0);
+protected:
+	NodeState top();
+	void calculateF(NodeState* ns);
+	void expandNode();
+};
+
+/*
 class DepthFirstSearch {
 	public:
 		SearchOutput output{};
@@ -24,4 +35,4 @@ class DepthFirstSearch {
 		SearchOutput search(int maxDepth);
 		SearchOutput iterativeSearch(int initDepth, int maxDepth, int interval);
 		void addRandomAdjacentNode();
-};
+};*/

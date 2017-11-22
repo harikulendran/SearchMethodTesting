@@ -14,13 +14,11 @@ template<template<typename...> class Container> class TreeSearch {
 		TreeSearch();
 
 	public:
-		SearchOutput search();
+		SearchOutput search(int maxDepth = INT32_MAX);
 
-	private:
-		void expandNode();
-		void goalReached();
-		
 	protected:
+		virtual void expandNode();
+		void goalReached();
 		virtual NodeState top() = 0;
 		virtual void calculateF(NodeState* ns) = 0;
 };
@@ -30,7 +28,7 @@ template <template<typename...> class Container> TreeSearch<Container>::TreeSear
 }
 
 
-template <template<typename...> class Container> SearchOutput TreeSearch<Container>::search() {
+template <template<typename...> class Container> SearchOutput TreeSearch<Container>::search(int maxDepth) {
 	while (fringe.size() != 0) {
 		currentNode = top();
 		fringe.pop();
@@ -41,7 +39,8 @@ template <template<typename...> class Container> SearchOutput TreeSearch<Contain
 			break;
 		}
 
-		expandNode();
+		if (currentNode.depth < maxDepth)
+			expandNode();
 	}
 	return output;
 }
