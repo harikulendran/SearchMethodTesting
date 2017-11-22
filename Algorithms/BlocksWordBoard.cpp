@@ -20,6 +20,7 @@ bool BlocksWorldBoard::isSolved() {
 	for (int i = 0; i < NO_OF_PIECES; i++)
 		solved &= (board[1][BOARD_SIZE - boardOffset--] == goals[i]);
 	return solved;
+	//return (board[0][0] == 'A') &&(board[1][0] == 'B') &&(board[2][0] == 'C');
 }
 
 void BlocksWorldBoard::checkMoves() {

@@ -5,47 +5,13 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 	return lhs.h > rhs.h;
 }
 
-AStar::AStar() {
-}
-
-SearchOutput AStar::search() {
-	//add the root node and calculate its 
-	NodeState root{0};
-	calculateF(&root);
-	nodes.push(move(root));
-	current = nodes.top();
-
-	while (!nodes.empty()) {
-		if (current.state.isSolved()) {
-			output.solnDepth = current.depth;
-			output.isOptimal = (output.solnDepth == 14);
-			output.nodesInMemory = nodes.size();
-			break;
-		}
-		nodes.pop();
-
-		current.state.checkMoves();
-		for (int i = 0; i < 4; i++) {
-			if (current.state.validMoves[i]) {
-				BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
-				newBoard.move(static_cast<Direction>(i));
-				NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
-				calculateF(&newState);
-				nodes.push(move(newState));
-			}
-		}
-		output.nodesExpanded++;
-		current = nodes.top();
-		output.maxNodesInMemory = (output.maxNodesInMemory < nodes.size()) ? nodes.size() : output.maxNodesInMemory;
-	}
-
-	return output;
+NodeState AStar::top() {
+	return fringe.top();
 }
 
 void AStar::calculateF(NodeState* ns) {
 	Coord pieces[NO_OF_PIECES];
 	getCoords(ns, pieces);
-
 	int H = calculateH(pieces);
 
 	ns->G = H;
@@ -61,6 +27,7 @@ int AStar::calculateH(Coord (&pieces)[NO_OF_PIECES]) {
 	return H;
 }
 
+//get the current position of the pieces
 void AStar::getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]) {
 	for (int j=0; j < BOARD_SIZE; j++)
 		for (int i = 0; i < BOARD_SIZE; i++) {

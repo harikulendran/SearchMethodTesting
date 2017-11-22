@@ -1,6 +1,8 @@
 #include "BlocksWorldBoard.h"
 #include "DepthFirstSearch.h"
 #include "BreadthFirstSearch.h"
+#include "IterativeDeepeningSearch.h"
+#include "TreeSearch.h"
 #include "AStar.h"
 #include <iostream>
 #include <fstream>
@@ -28,9 +30,14 @@ int main() {
 		auto start = chrono::steady_clock::now();
 		//DepthFirstSearch d{i+1};
 		//output = d.search();
-		//output = d.iterativeSearch(0,25,1);
-		BreadthFirstSearch b{};
-		output = b.search();
+
+		IterativeDeepeningSearch ids{};
+		output = ids.search(40);
+	
+		//BreadthFirstSearch b{};
+		//output = b.search();
+
+
 		//AStar a{};
 		//output = a.search();
 		auto dur = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now() - start);

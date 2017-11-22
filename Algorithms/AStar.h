@@ -1,29 +1,26 @@
 #pragma once
 
+#include "TreeSearch.h"
 #include "BlocksWorldBoard.h"
 #include "NodeState.h"
 #include <queue>
 
 using namespace std;
 
+
 struct LessThanByHeuristic {
 	public:
 		bool operator()(const NodeState lhs, const NodeState rhs) const;
 };
 
-class AStar {
-	public:
-		SearchOutput output{};
-		NodeState current;
-		priority_queue<NodeState, vector<NodeState>, LessThanByHeuristic> nodes;
-		int nodeIndex = 0;
+template<class Container> class my_pq : public priority_queue<NodeState, vector<NodeState>, LessThanByHeuristic> {};
 
-	public:
-		AStar();
-
-	public:
-		SearchOutput search();
-		void calculateF(NodeState* ns);
-		int calculateH(Coord (&pieces)[NO_OF_PIECES]);
-		void getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]);
+class AStar : public TreeSearch<my_pq> {
+public:
+	void calculateF(NodeState* ns);
+	int calculateH(Coord(&pieces)[NO_OF_PIECES]);
+	void getCoords(NodeState* ns, Coord(&pieces)[NO_OF_PIECES]);
+	
+protected:
+	NodeState top();
 };
