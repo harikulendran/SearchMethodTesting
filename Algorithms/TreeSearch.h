@@ -14,7 +14,7 @@ template<template<typename...> class Container> class TreeSearch {
 		TreeSearch();
 
 	public:
-		SearchOutput search(int maxDepth = INT32_MAX);
+		virtual SearchOutput search(int maxDepth = INT32_MAX);
 
 	protected:
 		virtual void expandNode();
@@ -35,6 +35,7 @@ template <template<typename...> class Container> SearchOutput TreeSearch<Contain
 		output.nodesExpanded++;
 
 		if (currentNode.state.isSolved()) {
+			complete = true;
 			goalReached();
 			break;
 		}

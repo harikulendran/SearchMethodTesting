@@ -5,7 +5,6 @@
 #include "NodeState.h"
 #include "TreeSearch.h"
 
-using namespace std;
 
 class DepthFirstSearch : public TreeSearch<stack> {
 public:
