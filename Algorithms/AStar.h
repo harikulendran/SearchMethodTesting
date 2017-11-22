@@ -24,22 +24,3 @@ public:
 protected:
 	NodeState top();
 };
-
-/*
-class AStar {
-	public:
-		SearchOutput output{};
-		NodeState current;
-		priority_queue<NodeState, vector<NodeState>, LessThanByHeuristic> nodes;
-		int nodeIndex = 0;
-
-	public:
-		AStar();
-
-	public:
-		SearchOutput search();
-		void calculateF(NodeState* ns);
-		int calculateH(Coord (&pieces)[NO_OF_PIECES]);
-		void getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]);
-};
-*/

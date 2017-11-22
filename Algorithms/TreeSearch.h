@@ -27,7 +27,6 @@ template<template<typename...> class Container> class TreeSearch {
 
 template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
 	fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
-	//calculateF(&top());
 }
 
 

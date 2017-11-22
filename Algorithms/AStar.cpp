@@ -5,62 +5,6 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 	return lhs.h > rhs.h;
 }
 
-/*AStar::AStar() {
-}
-
-SearchOutput AStar::search() {
-	//add the root node and calculate its 
-	NodeState root{0};
-	calculateF(&root);
-	nodes.push(move(root));
-	current = nodes.top();
-
-	while (!nodes.empty()) {
-		if (current.state.isSolved()) {
-			output.solnDepth = current.depth;
-			output.isOptimal = (output.solnDepth == 14);
-			output.nodesInMemory = nodes.size();
-			break;
-		}
-		nodes.pop();
-
-		current.state.checkMoves();
-		for (int i = 0; i < 4; i++) {
-			if (current.state.validMoves[i]) {
-				BlocksWorldBoard newBoard = BlocksWorldBoard{ current.state };
-				newBoard.move(static_cast<Direction>(i));
-				NodeState newState{ ++nodeIndex, current.thisNode, move(newBoard), current.depth + 1 };
-				newState.d = static_cast<Direction>(i);
-				calculateF(&newState);
-				nodes.push(move(newState));
-			}
-		}
-		output.nodesExpanded++;
-		current = nodes.top();
-		char s;
-		switch (static_cast<int>(current.d)) {
-		case (0):
-			s = 'L';
-			break;
-		case (1):
-			s = 'R';
-			break;
-		case (2):
-			s = 'U';
-			break;
-		case (3):
-			s = 'D';
-		}
-
-
-		if (output.nodesExpanded < 20)
-			cout << s << " ";
-		output.maxNodesInMemory = (output.maxNodesInMemory < nodes.size()) ? nodes.size() : output.maxNodesInMemory;
-	}
-
-	return output;
-}*/
-
 NodeState AStar::top() {
 	return fringe.top();
 }
