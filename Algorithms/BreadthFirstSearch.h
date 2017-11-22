@@ -1,13 +1,18 @@
 #pragma once
 
+#include "TreeSearch.h"
 #include <queue>
-#include "NodeState.h"
-#include "BlocksWorldBoard.h"
 
 
 using namespace std;
 
+class BreadthFirstSearch : public TreeSearch<std::queue> {
 
+protected:
+	NodeState top();
+	void calculateF(NodeState* ns);
+};
+/*
 class BreadthFirstSearch {
 	public:
 		SearchOutput output{};
@@ -25,4 +30,4 @@ class BreadthFirstSearch {
 		void addCurrentNodeEdges();
 		void showSolution();
 };
-
+*/

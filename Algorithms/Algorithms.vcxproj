@@ -162,7 +162,6 @@
     <ClCompile Include="DepthFirstSearch.cpp" />
     <ClCompile Include="BlocksWordBoard.cpp" />
     <ClCompile Include="NodeState.cpp" />
-    <ClCompile Include="TreeSearch.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

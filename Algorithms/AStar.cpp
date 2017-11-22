@@ -5,7 +5,7 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 	return lhs.h > rhs.h;
 }
 
-AStar::AStar() {
+/*AStar::AStar() {
 }
 
 SearchOutput AStar::search() {
@@ -59,12 +59,15 @@ SearchOutput AStar::search() {
 	}
 
 	return output;
+}*/
+
+NodeState AStar::top() {
+	return fringe.top();
 }
 
 void AStar::calculateF(NodeState* ns) {
 	Coord pieces[NO_OF_PIECES];
 	getCoords(ns, pieces);
-
 	int H = calculateH(pieces);
 
 	ns->G = H;

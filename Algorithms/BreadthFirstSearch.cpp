@@ -1,5 +1,5 @@
 #include "BreadthFirstSearch.h"
-
+/*
 BreadthFirstSearch::BreadthFirstSearch() {
 	//tree = make_shared<Tree>();
 	treeNodes.push(NodeState{ 0,-1,BlocksWorldBoard{} });
@@ -38,4 +38,13 @@ void BreadthFirstSearch::addCurrentNodeEdges() {
 			}
 		}
 	}
+}
+*/
+
+void BreadthFirstSearch::calculateF(NodeState* ns) {
+	return;
+}
+
+NodeState BreadthFirstSearch::top() {
+	return fringe.front();
 }
