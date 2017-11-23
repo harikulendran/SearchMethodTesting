@@ -14,11 +14,11 @@ struct LessThanByHeuristic {
 template<class Container> class my_pq : public priority_queue<NodeState, vector<NodeState>, LessThanByHeuristic> {};
 
 class AStar : public TreeSearch<my_pq> {
-public:
-	void calculateF(NodeState* ns);
-	int calculateH(Coord(&pieces)[NO_OF_PIECES]);
-	void getCoords(NodeState* ns, Coord(&pieces)[NO_OF_PIECES]);
-	
-protected:
-	NodeState top();
+	public:
+		void calculateF(NodeState* ns);
+		int calculateH(Coord(&pieces)[NO_OF_PIECES]);
+		void getCoords(NodeState* ns, Coord(&pieces)[NO_OF_PIECES]);
+		
+	protected:
+		NodeState top();
 };

@@ -8,5 +8,4 @@ class IterativeDeepeningSearch : public TreeSearch<stack> {
 		SearchOutput search(int maxDepth);
 	protected:
 		NodeState top();
-		void calculateF(NodeState* ns);
 };

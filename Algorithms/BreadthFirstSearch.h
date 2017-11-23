@@ -10,5 +10,4 @@ class BreadthFirstSearch : public TreeSearch<std::queue> {
 
 protected:
 	NodeState top();
-	void calculateF(NodeState* ns);
 };

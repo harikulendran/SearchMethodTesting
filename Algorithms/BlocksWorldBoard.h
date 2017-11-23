@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const static int BOARD_SIZE = 4;
+const static int BOARD_SIZE = 5;
 const static int NO_OF_PIECES = 3;
 const static string goals("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
@@ -46,6 +46,6 @@ class BlocksWorldBoard {
 		void move(Direction dir);
 		void print();
 	
-private:
+	private:
 		Coord agent{ BOARD_SIZE - 1,BOARD_SIZE - 1 };
 };

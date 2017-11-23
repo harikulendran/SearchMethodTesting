@@ -24,7 +24,3 @@ void DepthFirstSearch::expandNode() {
 		}
 	}
 }
-
-void DepthFirstSearch::calculateF(NodeState* ns) {
-	return;
-}

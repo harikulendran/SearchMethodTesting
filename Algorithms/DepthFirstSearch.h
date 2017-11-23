@@ -9,6 +9,5 @@ public:
 	DepthFirstSearch(int i = 0);
 protected:
 	NodeState top();
-	void calculateF(NodeState* ns);
 	void expandNode();
 };

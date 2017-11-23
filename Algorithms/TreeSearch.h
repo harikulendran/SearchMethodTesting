@@ -9,6 +9,8 @@ template<template<typename...> class Container> class TreeSearch {
 		int nodeIndex = 0;
 		bool complete = false;
 		Container<NodeState> fringe;
+		map<int, SolnNode> solnStore{};
+		bool storeSoln = false;
 
 	public:
 		TreeSearch();
@@ -20,7 +22,11 @@ template<template<typename...> class Container> class TreeSearch {
 		virtual void expandNode();
 		void goalReached();
 		virtual NodeState top() = 0;
-		virtual void calculateF(NodeState* ns) = 0;
+		virtual void calculateF(NodeState* ns);
+		
+	private:
+		void printSoln();
+		void printDir(int i);
 };
 
 template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
@@ -37,6 +43,13 @@ template <template<typename...> class Container> SearchOutput TreeSearch<Contain
 		if (currentNode.state.isSolved()) {
 			complete = true;
 			goalReached();
+			if (storeSoln)
+				printSoln();
+			break;
+		}
+
+		if (fringe.size() > 105000000) {
+			cout << "BROKE";
 			break;
 		}
 
@@ -61,6 +74,49 @@ template <template<typename...> class Container> void TreeSearch<Container>::exp
 			NodeState newNode{ ++nodeIndex,currentNode.thisNode,move(newBoard),currentNode.depth + 1 };
 			calculateF(&newNode);
 			fringe.push(newNode);
+
+			if (storeSoln)
+				solnStore.emplace(nodeIndex, SolnNode{i,currentNode.thisNode});
+			//if (output.nodesExpanded < 20)
+			//	newBoard.print();
 		}
+	}
+}
+
+template <template<typename...> class Container> void TreeSearch<Container>::calculateF(NodeState* ns) {
+	return;
+}
+
+template <template<typename...> class Container> void TreeSearch<Container>::printSoln() {
+	int index = currentNode.thisNode;
+	int size = currentNode.depth;
+	int* soln = new int[size];
+
+	for (int i = 0; i < size; i++) {
+		soln[i] = solnStore[index].dir;
+		index = solnStore[index].parentNode;
+	}
+
+	for (int i = size - 1; i >= 0; i--)
+		printDir(soln[i]);
+	cout << "\n";
+
+	delete(soln);
+}
+
+template <template<typename...> class Container> void TreeSearch<Container>::printDir(int i) {
+	switch (static_cast<Direction>(i)) {
+	case (Direction::UP) :
+		cout << "UP ";
+		break;
+	case (Direction::DOWN) :
+		cout << "DOWN ";
+		break;
+	case (Direction::LEFT) :
+		cout << "LEFT ";
+		break;
+	case (Direction::RIGHT) :
+		cout << "RIGHT ";
+		break;
 	}
 }

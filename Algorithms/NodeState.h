@@ -10,11 +10,19 @@ class NodeState {
 		int parentNode;
 		int h = 0;
 		int G = 0;
-		int depth;
+		int depth = 0;
 		BlocksWorldBoard state;
 		bool expanded = false;
-		Direction d;
 
 	public:
 		NodeState(int n = -1, int p = -1, BlocksWorldBoard s = BlocksWorldBoard{}, int d = 0);
+};
+
+class SolnNode {
+	public:
+		int dir = 0;
+		int parentNode = 0;
+
+	public:
+		SolnNode(int d=-1, int n=-1);
 };

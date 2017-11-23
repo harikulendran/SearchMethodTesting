@@ -14,7 +14,3 @@ SearchOutput IterativeDeepeningSearch::search(int maxDepth) {
 	}
 	return output;
 }
-
-void IterativeDeepeningSearch::calculateF(NodeState* ns) {
-	return;
-}

@@ -25,26 +25,21 @@ int main() {
 		outputFile << "NO,Solution Depth,Nodes In Memory,Max Nodes in Memory,Nodes Expanded,Optimal Solution,Real World Time\n";
 
 	string outputString = "";
-
+	
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
 		//DepthFirstSearch d{i+1};
 		//output = d.search();
-		//output = d.iterativeSearch(0,25,1);
+
 		//BreadthFirstSearch b{};
 		//output = b.search();
+
 		//AStar a{};
 		//output = a.search();
 
 		IterativeDeepeningSearch ids{};
 		output = ids.search(40);
 	
-		//BreadthFirstSearch b{};
-		//output = b.search();
-
-
-		//AStar a{};
-		//output = a.search();
 		auto dur = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now() - start);
 		output.realWorldTime = dur.count();
 
@@ -55,7 +50,7 @@ int main() {
 
 		total += dur.count();
 			
-		cout << "time: " << dur.count() << endl;
+		cout << i << " time: " << dur.count() << endl;
 	}
 	outputFile << outputString;
 	outputFile << "\n";
