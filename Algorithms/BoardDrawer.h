@@ -16,7 +16,7 @@ class BoardDrawer {
 		BoardDrawer();
 
 	public:
-		void draw(BlocksWorldBoard board, int i=0);
+		void draw(string name, BlocksWorldBoard board, int i=0);
 
 	private:
 		void showBoard();

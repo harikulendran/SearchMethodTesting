@@ -15,6 +15,7 @@ template<class Container> class my_pq : public priority_queue<NodeState, vector<
 
 class AStar : public TreeSearch<my_pq> {
 	public:
+		AStar();
 		void calculateF(NodeState* ns);
 		int calculateH(Coord(&pieces)[NO_OF_PIECES]);
 		void getCoords(NodeState* ns, Coord(&pieces)[NO_OF_PIECES]);

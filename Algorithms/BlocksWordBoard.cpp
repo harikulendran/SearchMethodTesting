@@ -9,8 +9,11 @@ BlocksWorldBoard::BlocksWorldBoard() {
 		for (int j = 0; j < BOARD_SIZE; j++)
 			board[i][j] = '.';
 	//add the pieces in the start state
-	for (int i = 0; i < NO_OF_PIECES; i++)
-		board[i][BOARD_SIZE - 1] = goals[i];
+	//for (int i = 0; i < NO_OF_PIECES; i++)
+	//	board[i][BOARD_SIZE - 1] = goals[i];
+	board[1][1] = 'A';
+	board[1][2] = 'B';
+	board[0][3] = 'C';
 	board[BOARD_SIZE - 1][BOARD_SIZE - 1] = 'a';
 }
 

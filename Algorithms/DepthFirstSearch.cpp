@@ -5,6 +5,7 @@
 
 DepthFirstSearch::DepthFirstSearch(int i) {
 	srand(time(NULL) + i);
+	searchName = "DFS";
 }
 
 NodeState DepthFirstSearch::top() {
@@ -22,8 +23,7 @@ void DepthFirstSearch::expandNode() {
 			if (i == 3)
 				currentNode = top();
 
-			if (output.nodesExpanded < 20)
-				boardDrawer.draw(newBoard, nodeIndex);
+			recordExpansion(i,newBoard);
 		}
 	}
 }

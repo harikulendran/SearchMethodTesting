@@ -9,7 +9,7 @@ const static int BOARD_SIZE = 4;
 const static int NO_OF_PIECES = 3;
 const static string goals("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-enum class Direction { UP = 0, LEFT = 1, RIGHT = 2, DOWN = 3, NA = 4 };
+enum class Direction { UP = 1, LEFT = 3, RIGHT = 2, DOWN = 0, NA = 4 };
 
 class SearchOutput {
 	public:

@@ -6,7 +6,7 @@ BoardDrawer::BoardDrawer() {
 	//showBoard();
 }
 
-void BoardDrawer::draw(BlocksWorldBoard board, int i) {
+void BoardDrawer::draw(string name, BlocksWorldBoard board, int i) {
 	image = CImg<unsigned char>{ x_dim,y_dim,1,3,255 };
 	for (int j = 0; j < BOARD_SIZE; j++)
 		for (int i = 0; i < BOARD_SIZE; i++)
@@ -16,7 +16,7 @@ void BoardDrawer::draw(BlocksWorldBoard board, int i) {
 	drawGrid();
 
 	std:ostringstream path;
-	path << "img/BFS/" << i << ".bmp";
+	path << "img/" << name << "/" << i << ".bmp";
 	string tstr = path.str();
 	image.save(tstr.c_str());
 }

@@ -5,6 +5,7 @@
 
 template<template<typename...> class Container> class TreeSearch {
 	public:
+		string searchName = "TreeSearch";
 		SearchOutput output{};
 		BoardDrawer boardDrawer{};
 		NodeState currentNode;
@@ -25,6 +26,7 @@ template<template<typename...> class Container> class TreeSearch {
 		void goalReached();
 		virtual NodeState top() = 0;
 		virtual void calculateF(NodeState* ns);
+		void recordExpansion(int i, BlocksWorldBoard b);
 		
 	private:
 		void printSoln();
@@ -33,15 +35,20 @@ template<template<typename...> class Container> class TreeSearch {
 
 template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
 	fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
-	boardDrawer.draw(BlocksWorldBoard{}, nodeIndex);
 }
 
 
 template <template<typename...> class Container> SearchOutput TreeSearch<Container>::search(int maxDepth) {
+	//boardDrawer.draw(searchName, BlocksWorldBoard{}, 0);
 	while (fringe.size() != 0) {
 		currentNode = top();
 		fringe.pop();
 		output.nodesExpanded++;
+		if (output.nodesExpanded < 100) {
+			//boardDrawer.draw("AStarTest", currentNode.state, nodeIndex);
+			printDir(currentNode.dir);
+			cout << currentNode.h << " | ";
+		}
 
 		if (currentNode.state.isSolved()) {
 			complete = true;
@@ -75,16 +82,21 @@ template <template<typename...> class Container> void TreeSearch<Container>::exp
 			BlocksWorldBoard newBoard = BlocksWorldBoard(currentNode.state);
 			newBoard.move(static_cast<Direction>(i));
 			NodeState newNode{ ++nodeIndex,currentNode.thisNode,move(newBoard),currentNode.depth + 1 };
+			newNode.dir = i;
 			calculateF(&newNode);
 			fringe.push(newNode);
 
-			if (storeSoln)
-				solnStore.emplace(nodeIndex, SolnNode{i,currentNode.thisNode});
-			if (output.nodesExpanded < 20) {
-				boardDrawer.draw(newBoard, nodeIndex);
-				//printDir(i);
-			}
+			recordExpansion(i,newBoard);
 		}
+	}
+}
+
+template <template<typename...> class Container> void TreeSearch<Container>::recordExpansion(int i, BlocksWorldBoard b) {
+	if (storeSoln)
+		solnStore.emplace(nodeIndex, SolnNode{i,currentNode.thisNode});
+	if (output.nodesExpanded < 20) {
+		//boardDrawer.draw(searchName, b, nodeIndex);
+		//printDir(i);
 	}
 }
 

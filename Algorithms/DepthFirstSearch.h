@@ -5,9 +5,9 @@
 
 
 class DepthFirstSearch : public TreeSearch<stack> {
-public:
-	DepthFirstSearch(int i = 0);
-protected:
-	NodeState top();
-	void expandNode();
+	public:
+		DepthFirstSearch(int i = 0);
+	protected:
+		NodeState top();
+		void expandNode();
 };
