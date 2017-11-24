@@ -8,11 +8,10 @@ class NodeState {
 	public:
 		int thisNode;
 		int parentNode;
-		int h = 0;
-		int G = 0;
+		unsigned __int16 h = 0;
+		unsigned __int16 G = 0;
 		int depth = 0;
 		BlocksWorldBoard state;
-		bool expanded = false;
 
 	public:
 		NodeState(int n = -1, int p = -1, BlocksWorldBoard s = BlocksWorldBoard{}, int d = 0);

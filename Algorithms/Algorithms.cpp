@@ -9,6 +9,7 @@
 #include <string>
 #include <chrono>
 
+
 using namespace std;
 
 int main() {
@@ -20,25 +21,27 @@ int main() {
 	bool start = f.good();
 	ofstream outputFile;
 	outputFile.open("DATA/outputFile.csv", ios::out | ios::app);
-
+	cout << sizeof(NodeState) << "\n";
 	if (!start)
 		outputFile << "NO,Solution Depth,Nodes In Memory,Max Nodes in Memory,Nodes Expanded,Optimal Solution,Real World Time\n";
 
 	string outputString = "";
 	
+
+
 	for (int i = 0; i < testno; i++) {
 		auto start = chrono::steady_clock::now();
 		//DepthFirstSearch d{i+1};
 		//output = d.search();
 
-		//BreadthFirstSearch b{};
-		//output = b.search();
+		BreadthFirstSearch b{};
+		output = b.search();
 
 		//AStar a{};
 		//output = a.search();
 
-		IterativeDeepeningSearch ids{};
-		output = ids.search(40);
+		//IterativeDeepeningSearch ids{};
+		//output = ids.search(40);
 	
 		auto dur = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now() - start);
 		output.realWorldTime = dur.count();

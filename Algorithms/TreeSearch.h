@@ -1,10 +1,12 @@
 #pragma once
 #include "BlocksWorldBoard.h"
 #include "NodeState.h"
+#include "BoardDrawer.h"
 
 template<template<typename...> class Container> class TreeSearch {
 	public:
 		SearchOutput output{};
+		BoardDrawer boardDrawer{};
 		NodeState currentNode;
 		int nodeIndex = 0;
 		bool complete = false;
@@ -31,6 +33,7 @@ template<template<typename...> class Container> class TreeSearch {
 
 template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
 	fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
+	boardDrawer.draw(BlocksWorldBoard{}, nodeIndex);
 }
 
 
@@ -77,8 +80,10 @@ template <template<typename...> class Container> void TreeSearch<Container>::exp
 
 			if (storeSoln)
 				solnStore.emplace(nodeIndex, SolnNode{i,currentNode.thisNode});
-			//if (output.nodesExpanded < 20)
-			//	newBoard.print();
+			if (output.nodesExpanded < 20) {
+				boardDrawer.draw(newBoard, nodeIndex);
+				//printDir(i);
+			}
 		}
 	}
 }

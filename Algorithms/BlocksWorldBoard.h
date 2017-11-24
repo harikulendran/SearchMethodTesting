@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const static int BOARD_SIZE = 5;
+const static int BOARD_SIZE = 4;
 const static int NO_OF_PIECES = 3;
 const static string goals("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 

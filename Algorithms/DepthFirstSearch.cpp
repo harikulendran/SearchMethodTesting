@@ -21,6 +21,9 @@ void DepthFirstSearch::expandNode() {
 			fringe.push(NodeState{ ++nodeIndex, currentNode.thisNode, newBoard, currentNode.depth + 1 });
 			if (i == 3)
 				currentNode = top();
+
+			if (output.nodesExpanded < 20)
+				boardDrawer.draw(newBoard, nodeIndex);
 		}
 	}
 }

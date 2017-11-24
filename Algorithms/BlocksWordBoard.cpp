@@ -11,6 +11,7 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	//add the pieces in the start state
 	for (int i = 0; i < NO_OF_PIECES; i++)
 		board[i][BOARD_SIZE - 1] = goals[i];
+	board[BOARD_SIZE - 1][BOARD_SIZE - 1] = 'a';
 }
 
 bool BlocksWorldBoard::isSolved() {

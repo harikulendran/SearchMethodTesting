@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="AStar.h" />
     <ClInclude Include="BlocksWorldBoard.h" />
+    <ClInclude Include="BoardDrawer.h" />
     <ClInclude Include="BreadthFirstSearch.h" />
     <ClInclude Include="DepthFirstSearch.h" />
     <ClInclude Include="IterativeDeepeningSearch.h" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
     <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="BoardDrawer.cpp" />
     <ClCompile Include="BreadthFirstSearch.cpp" />
     <ClCompile Include="DepthFirstSearch.cpp" />
     <ClCompile Include="BlocksWordBoard.cpp" />
