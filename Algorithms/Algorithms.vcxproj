@@ -150,6 +150,7 @@
     <ClInclude Include="BlocksWorldBoard.h" />
     <ClInclude Include="BoardDrawer.h" />
     <ClInclude Include="BreadthFirstSearch.h" />
+    <ClInclude Include="ControlPanel.h" />
     <ClInclude Include="DepthFirstSearch.h" />
     <ClInclude Include="IterativeDeepeningSearch.h" />
     <ClInclude Include="NodeState.h" />

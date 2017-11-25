@@ -1,4 +1,5 @@
 #pragma once
+#include "ControlPanel.h"
 #include "BlocksWorldBoard.h"
 #include "NodeState.h"
 #include "BoardDrawer.h"
@@ -13,7 +14,6 @@ template<template<typename...> class Container> class TreeSearch {
 		bool complete = false;
 		Container<NodeState> fringe;
 		map<int, SolnNode> solnStore{};
-		bool storeSoln = false;
 
 	public:
 		TreeSearch();
@@ -24,6 +24,8 @@ template<template<typename...> class Container> class TreeSearch {
 	protected:
 		virtual void expandNode();
 		void goalReached();
+		//purely virtual function to describe how the top of the
+		//fringe should be accessed.
 		virtual NodeState top() = 0;
 		virtual void calculateF(NodeState* ns);
 		void recordExpansion(int i, BlocksWorldBoard b);
@@ -33,33 +35,32 @@ template<template<typename...> class Container> class TreeSearch {
 		void printDir(int i);
 };
 
+//Constructor simply adds the root node
 template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
 	fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
 }
 
-
+//Main tree search code
 template <template<typename...> class Container> SearchOutput TreeSearch<Container>::search(int maxDepth) {
 	//boardDrawer.draw(searchName, BlocksWorldBoard{}, 0);
 	while (fringe.size() != 0) {
 		currentNode = top();
 		fringe.pop();
 		output.nodesExpanded++;
-		if (output.nodesExpanded < 100) {
+		if (output.nodesExpanded < 100 && SHOW_EXPANSION_ORDER) {
 			//boardDrawer.draw("AStarTest", currentNode.state, nodeIndex);
 			printDir(currentNode.dir);
-			cout << currentNode.h << " | ";
 		}
 
 		if (currentNode.state.isSolved()) {
 			complete = true;
 			goalReached();
-			if (storeSoln)
-				printSoln();
 			break;
 		}
 
-		if (fringe.size() > 105000000) {
-			cout << "BROKE";
+		//makes sure memory of system is not exceeded
+		if (fringe.size() > MAX_NODES) {
+			cout << "Mem limit reached ";
 			break;
 		}
 
@@ -69,12 +70,16 @@ template <template<typename...> class Container> SearchOutput TreeSearch<Contain
 	return output;
 }
 
+//collects the required data when a solution is found
 template <template<typename...> class Container> void TreeSearch<Container>::goalReached() {
 	output.solnDepth = currentNode.depth;
 	output.isOptimal = (output.solnDepth == 14 + BOARD_SIZE - 4);
 	output.nodesInMemory = fringe.size();
+	if (STORE_SOLUTION)
+		printSoln();
 }
 
+//Takes a node and expands it, adding the child nodes to the fringe
 template <template<typename...> class Container> void TreeSearch<Container>::expandNode() {
 	currentNode.state.checkMoves();
 	for (int i = 0; i < 4; i++) {
@@ -91,19 +96,25 @@ template <template<typename...> class Container> void TreeSearch<Container>::exp
 	}
 }
 
+//Funtion to store nodes required to trace solution/ output move order 
 template <template<typename...> class Container> void TreeSearch<Container>::recordExpansion(int i, BlocksWorldBoard b) {
-	if (storeSoln)
+	if (STORE_SOLUTION)
 		solnStore.emplace(nodeIndex, SolnNode{i,currentNode.thisNode});
-	if (output.nodesExpanded < 20) {
-		//boardDrawer.draw(searchName, b, nodeIndex);
-		//printDir(i);
+	if (output.nodesExpanded < 20 && SHOW_ADDITION_ORDER) {
+		if (SAVE_IMAGES)
+			boardDrawer.draw(searchName, b, nodeIndex);
+		if (PRINT_TO_CONSOLE)
+			printDir(i);
 	}
+	output.maxNodesInMemory = (output.maxNodesInMemory > fringe.size()) ? output.maxNodesInMemory : fringe.size();
 }
 
+//standard heuristic function, to be overridden in derived classes that need it
 template <template<typename...> class Container> void TreeSearch<Container>::calculateF(NodeState* ns) {
 	return;
 }
 
+//Prints the solution as a string of directions moved by the agent in order to solve the problem
 template <template<typename...> class Container> void TreeSearch<Container>::printSoln() {
 	int index = currentNode.thisNode;
 	int size = currentNode.depth;
@@ -114,26 +125,34 @@ template <template<typename...> class Container> void TreeSearch<Container>::pri
 		index = solnStore[index].parentNode;
 	}
 
-	for (int i = size - 1; i >= 0; i--)
-		printDir(soln[i]);
-	cout << "\n";
+	if (PRINT_TO_CONSOLE) {
+		for (int i = size - 1; i >= 0; i--)
+			printDir(soln[i]);
+		cout << "\n";
+	} else {
+		boardDrawer.displaySoln(soln,size);
+	}
 
 	delete(soln);
 }
 
+//Takes the direction as an int and prints out the human readable direction
 template <template<typename...> class Container> void TreeSearch<Container>::printDir(int i) {
 	switch (static_cast<Direction>(i)) {
-	case (Direction::UP) :
-		cout << "UP ";
-		break;
-	case (Direction::DOWN) :
-		cout << "DOWN ";
-		break;
-	case (Direction::LEFT) :
-		cout << "LEFT ";
-		break;
-	case (Direction::RIGHT) :
-		cout << "RIGHT ";
-		break;
+		case (Direction::UP) :
+			cout << "UP ";
+			break;
+		case (Direction::DOWN) :
+			cout << "DOWN ";
+			break;
+		case (Direction::LEFT) :
+			cout << "LEFT ";
+			break;
+		case (Direction::RIGHT) :
+			cout << "RIGHT ";
+			break;
+		case (Direction::NA) :
+			cout << "NA";
+			break;
 	}
 }

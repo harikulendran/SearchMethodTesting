@@ -1,6 +1,7 @@
 #include <iostream>
 #include "BlocksWorldBoard.h"
 
+//simple coordinate representation
 Coord::Coord(int acoord, int bcoord) : x(acoord), y(bcoord) {}
 
 BlocksWorldBoard::BlocksWorldBoard() {
@@ -9,14 +10,16 @@ BlocksWorldBoard::BlocksWorldBoard() {
 		for (int j = 0; j < BOARD_SIZE; j++)
 			board[i][j] = '.';
 	//add the pieces in the start state
-	//for (int i = 0; i < NO_OF_PIECES; i++)
-	//	board[i][BOARD_SIZE - 1] = goals[i];
-	board[1][1] = 'A';
-	board[1][2] = 'B';
-	board[0][3] = 'C';
+	for (int i = 0; i < NO_OF_PIECES; i++)
+		board[i][BOARD_SIZE - 1] = goals[i];
+	//board[0][4] = 'A';
+	//board[1][4] = 'B';
+	//board[2][4] = 'C';
+	//add the agent
 	board[BOARD_SIZE - 1][BOARD_SIZE - 1] = 'a';
 }
 
+//checks if the current board is the goal state
 bool BlocksWorldBoard::isSolved() {
 	bool solved = true;
 	int boardOffset = NO_OF_PIECES;
@@ -27,6 +30,7 @@ bool BlocksWorldBoard::isSolved() {
 	//return (board[0][0] == 'A') &&(board[1][0] == 'B') &&(board[2][0] == 'C');
 }
 
+//fills the list of valid moves for the agent in its current position
 void BlocksWorldBoard::checkMoves() {
 	validMoves[static_cast<int>(Direction::RIGHT)] = (agent.x != BOARD_SIZE - 1);
 	validMoves[static_cast<int>(Direction::LEFT)] = (agent.x != 0);
@@ -34,6 +38,7 @@ void BlocksWorldBoard::checkMoves() {
 	validMoves[static_cast<int>(Direction::UP)] = (agent.y != 0);
 }
 
+//links each Direction to a unit coordinate
 Coord BlocksWorldBoard::moves(Direction dir) {
 	switch (dir) {
 		case Direction::RIGHT :
@@ -47,6 +52,7 @@ Coord BlocksWorldBoard::moves(Direction dir) {
 	}
 }
 
+//moves the agent in the given direction
 void BlocksWorldBoard::move(Direction dir) {
 	if (dir == Direction::NA)
 		return;
@@ -58,6 +64,7 @@ void BlocksWorldBoard::move(Direction dir) {
 	agent.y += offset.y;
 }
 
+//prints the current board
 void BlocksWorldBoard::print() {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {

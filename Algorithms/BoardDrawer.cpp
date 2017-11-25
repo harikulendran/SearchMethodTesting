@@ -7,6 +7,36 @@ BoardDrawer::BoardDrawer() {
 }
 
 void BoardDrawer::draw(string name, BlocksWorldBoard board, int i) {
+	drawBoard(board);
+
+	std:ostringstream path;
+	path << "img/" << name << "/" << i << ".bmp";
+	string tstr = path.str();
+	image.save(tstr.c_str());
+}
+
+void BoardDrawer::displaySoln(int* soln, int size) {
+	CImgDisplay main(image, "Solution", 255);
+	BlocksWorldBoard board{};
+	int backIndex = 0;
+	drawBoard(board);
+	draw("soln", board, backIndex++);
+	image.display(main);
+	for (int i = size - 1; i >= 0; i--) {
+		cimg::wait(700);
+		cout << soln[i] << " ";
+		board.move(static_cast<Direction>(soln[i]));
+		drawBoard(board);
+		draw("soln", board, backIndex++);
+		image.display(main);
+	}
+	while (!main.is_closed()) {
+		cimg::wait(20);
+	}
+
+}
+
+void BoardDrawer::drawBoard(BlocksWorldBoard board) {
 	image = CImg<unsigned char>{ x_dim,y_dim,1,3,255 };
 	for (int j = 0; j < BOARD_SIZE; j++)
 		for (int i = 0; i < BOARD_SIZE; i++)
@@ -14,11 +44,6 @@ void BoardDrawer::draw(string name, BlocksWorldBoard board, int i) {
 				drawPiece(i, j, board.board[i][j]);
 			}
 	drawGrid();
-
-	std:ostringstream path;
-	path << "img/" << name << "/" << i << ".bmp";
-	string tstr = path.str();
-	image.save(tstr.c_str());
 }
 
 void BoardDrawer::drawPiece(int x, int y, char c) {

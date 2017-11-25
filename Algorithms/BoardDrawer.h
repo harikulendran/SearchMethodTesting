@@ -17,9 +17,11 @@ class BoardDrawer {
 
 	public:
 		void draw(string name, BlocksWorldBoard board, int i=0);
+		void displaySoln(int* soln, int size);
 
 	private:
 		void showBoard();
+		void drawBoard(BlocksWorldBoard board);
 		void drawGrid();
 		void drawPiece(int x, int y, char c);
 };

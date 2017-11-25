@@ -11,7 +11,7 @@ class NodeState {
 		unsigned __int16 h = 0;
 		unsigned __int16 G = 0;
 		int depth = 0;
-		int dir = 0;
+		int dir = 4;
 		BlocksWorldBoard state;
 
 	public:

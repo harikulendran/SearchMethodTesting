@@ -1,18 +1,22 @@
 #include "AStar.h"
 #include <cmath>
 
+//Define the comparator for the priority queue
 bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) const {
 	return lhs.h > rhs.h;
 }
 
+//set the search name
 AStar::AStar() {
-	searchName = "AStar";
+	searchName = "soln";
 }
 
+//uses a priority queue
 NodeState AStar::top() {
 	return fringe.top();
 }
 
+//Calculate the fitness of the current node
 void AStar::calculateF(NodeState* ns) {
 	Coord pieces[NO_OF_PIECES];
 	getCoords(ns, pieces);
@@ -21,9 +25,9 @@ void AStar::calculateF(NodeState* ns) {
 	ns->G = H;
 
 	ns->h = H+ns->depth;
-	//ns->h = 0;
 }
 
+//Calculate the heuristic, the Manhattan distance
 int AStar::calculateH(Coord (&pieces)[NO_OF_PIECES]) {
 	int H = 0;
 	int boardOffset = NO_OF_PIECES;
@@ -32,7 +36,7 @@ int AStar::calculateH(Coord (&pieces)[NO_OF_PIECES]) {
 	return H;
 }
 
-//get the current position of the pieces
+//get the current position of the pieces on the board
 void AStar::getCoords(NodeState* n, Coord (&pieces)[NO_OF_PIECES]) {
 	for (int j=0; j < BOARD_SIZE; j++)
 		for (int i = 0; i < BOARD_SIZE; i++) {
