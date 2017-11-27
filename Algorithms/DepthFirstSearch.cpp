@@ -9,6 +9,7 @@ DepthFirstSearch::DepthFirstSearch(int i) {
 	//seed for concurrent runs
 	srand(time(NULL) + i);
 	searchName = "DFS";
+	push(NodeState{ 0,-1,BlocksWorldBoard{} });
 }
 
 //uses a stack
@@ -24,9 +25,11 @@ void DepthFirstSearch::expandNode() {
 		if (currentNode.state.validMoves[(i+off)%4]) {
 			BlocksWorldBoard newBoard = BlocksWorldBoard{currentNode.state};
 			newBoard.move(static_cast<Direction>((i + off)%4));
-			fringe.push(NodeState{ ++nodeIndex, currentNode.thisNode, newBoard, currentNode.depth + 1 });
+			NodeState newNode{ ++nodeIndex, currentNode.thisNode, newBoard, currentNode.depth + 1 };
+			newNode.dir = (i + off) % 4;
+			push(newNode);
 
-			recordExpansion((i+off)%4,newBoard);
+			//recordExpansion((i+off)%4,newBoard);
 		}
 	}
 }

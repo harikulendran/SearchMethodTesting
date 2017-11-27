@@ -13,8 +13,10 @@ NodeState IterativeDeepeningSearch::top() {
 //loops from 0 to the maxDepth calling a stack tree search (DFS) for each value
 SearchOutput IterativeDeepeningSearch::search(int maxDepth) {
 	for (int i = 0; i < maxDepth; i++) {
-		if (fringe.size() == 0)
+		if (fringe.size() == 0) {
 			fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
+			boardDrawer.draw(searchName, BlocksWorldBoard{}, ++nodeIndex);
+		}
 		TreeSearch::search(i);
 		if (complete)
 			break;

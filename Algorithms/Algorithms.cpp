@@ -14,7 +14,7 @@ using namespace std;
 
 int main() {
 	__int64 total = 1;
-	int testno = 10;
+	int testno = 1;
 	SearchOutput output;
 
 	ifstream f(string("DATA/outputFile.csv").c_str());
@@ -40,16 +40,16 @@ int main() {
 				+ to_string(output.nodesInMemory) + "," + to_string(output.maxNodesInMemory) + ","
 				+ to_string(output.nodesExpanded) + "," + to_string(output.isOptimal) + ","
 				+ to_string(output.realWorldTime) + "\n";
-		}
-		BreadthFirstSearch b{};
-		output = b.search();
-
+		}*/
+		//BreadthFirstSearch b{};
+		//output = b.search();
+		/*
 		outputString +="BFS,"+ to_string(i + 1) + "," + to_string(output.solnDepth) + "," 
 					+ to_string(output.nodesInMemory) + "," + to_string(output.maxNodesInMemory) + ","
 					+ to_string(output.nodesExpanded) + "," + to_string(output.isOptimal) + ","
 					+ to_string(output.realWorldTime) + "\n";
 		*/
-		//	AStar a{};
+		//AStar a{};
 		//output = a.search();
 		
 		/*outputString += "AStar,"+to_string(i + 1) + "," + to_string(output.solnDepth) + "," 
