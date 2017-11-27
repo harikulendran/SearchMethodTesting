@@ -10,7 +10,7 @@ template<template<typename...> class Container> class TreeSearch {
 		SearchOutput output{};
 		BoardDrawer boardDrawer{};
 		NodeState currentNode;
-		int nodeIndex = -1;
+		int nodeIndex = 0;
 		bool complete = false;
 		Container<NodeState> fringe;
 		map<int, SolnNode> solnStore{};
@@ -27,18 +27,29 @@ template<template<typename...> class Container> class TreeSearch {
 		//purely virtual function to describe how the top of the
 		//fringe should be accessed.
 		virtual NodeState top() = 0;
+		void push(NodeState n);
 		virtual void calculateF(NodeState* ns);
-		void recordExpansion(int i, BlocksWorldBoard b);
 		
 	private:
 		void printSoln();
 		void printDir(int i);
 };
 
+template <template<typename...> class Container> void TreeSearch<Container>::push(NodeState n) {
+	fringe.push(n);
+	if (STORE_SOLUTION)
+		solnStore.emplace(nodeIndex, SolnNode{n.dir,n.parentNode});
+	if (output.nodesExpanded < 41 && SHOW_ADDITION_ORDER) {
+		if (SAVE_IMAGES)
+			boardDrawer.draw(searchName, n.state, nodeIndex);
+		if (PRINT_TO_CONSOLE)
+			printDir(i);
+	}
+	output.maxNodesInMemory = (output.maxNodesInMemory > fringe.size()) ? output.maxNodesInMemory : fringe.size();
+}
+
 //Constructor simply adds the root node
 template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
-	fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
-	boardDrawer.draw("IDS", BlocksWorldBoard{}, ++nodeIndex);
 }
 
 //Main tree search code
@@ -46,10 +57,8 @@ template <template<typename...> class Container> SearchOutput TreeSearch<Contain
 	//boardDrawer.draw(searchName, BlocksWorldBoard{}, 0);
 	while (fringe.size() != 0) {
 		currentNode = top();
-		output.nodesExpanded++;
 		fringe.pop();
 		if (output.nodesExpanded < 100 && SHOW_EXPANSION_ORDER) {
-			//boardDrawer.draw("AStarTest", currentNode.state, nodeIndex);
 			printDir(currentNode.dir);
 		}
 
@@ -83,10 +92,7 @@ template <template<typename...> class Container> void TreeSearch<Container>::goa
 //Takes a node and expands it, adding the child nodes to the fringe
 template <template<typename...> class Container> void TreeSearch<Container>::expandNode() {
 	currentNode.state.checkMoves();
-	/*if (output.nodesExpanded < 20) {
-		currentNode.state.print();
-		cout << currentNode.thisNode << " - F: " << currentNode.h << " - ";
-	}*/
+	output.nodesExpanded++;
 	for (int i = 0; i < 4; i++) {
 		if (currentNode.state.validMoves[i]) {
 			BlocksWorldBoard newBoard = BlocksWorldBoard(currentNode.state);
@@ -94,26 +100,11 @@ template <template<typename...> class Container> void TreeSearch<Container>::exp
 			NodeState newNode{ ++nodeIndex,currentNode.thisNode,move(newBoard),currentNode.depth + 1 };
 			newNode.dir = i;
 			calculateF(&newNode);
-			fringe.push(newNode);
+			push(newNode);
 
-			recordExpansion(i,newBoard);
+			//recordExpansion(i,newBoard);
 		}
 	}
-	//if (output.nodesExpanded < 20)
-		//cout << "\n";
-}
-
-//Funtion to store nodes required to trace solution/ output move order 
-template <template<typename...> class Container> void TreeSearch<Container>::recordExpansion(int i, BlocksWorldBoard b) {
-	if (STORE_SOLUTION)
-		solnStore.emplace(nodeIndex, SolnNode{i,currentNode.thisNode});
-	if (output.nodesExpanded < 41 && SHOW_ADDITION_ORDER) {
-		if (SAVE_IMAGES)
-			boardDrawer.draw(searchName, b, nodeIndex);
-		if (PRINT_TO_CONSOLE)
-			printDir(i);
-	}
-	output.maxNodesInMemory = (output.maxNodesInMemory > fringe.size()) ? output.maxNodesInMemory : fringe.size();
 }
 
 //standard heuristic function, to be overridden in derived classes that need it

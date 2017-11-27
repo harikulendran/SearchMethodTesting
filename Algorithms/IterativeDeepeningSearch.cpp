@@ -3,6 +3,7 @@
 //Sets the search name for use in image IO operations
 IterativeDeepeningSearch::IterativeDeepeningSearch() {
 	searchName = "IDS";
+	push(NodeState{ 0,-1,BlocksWorldBoard{} });
 }
 
 //Uses a stack
@@ -14,8 +15,7 @@ NodeState IterativeDeepeningSearch::top() {
 SearchOutput IterativeDeepeningSearch::search(int maxDepth) {
 	for (int i = 0; i < maxDepth; i++) {
 		if (fringe.size() == 0) {
-			fringe.push(NodeState{ 0,-1,BlocksWorldBoard{} });
-			boardDrawer.draw(searchName, BlocksWorldBoard{}, ++nodeIndex);
+			push(NodeState{ 0,-1,BlocksWorldBoard{} });
 		}
 		TreeSearch::search(i);
 		if (complete)

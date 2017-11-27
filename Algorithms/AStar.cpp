@@ -8,7 +8,8 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 
 //set the search name
 AStar::AStar() {
-	searchName = "soln";
+	searchName = "AStar";
+	push(NodeState{ 0,-1,BlocksWorldBoard{} });
 }
 
 //uses a priority queue

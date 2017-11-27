@@ -20,6 +20,7 @@ NodeState DepthFirstSearch::top() {
 //DFS overrides the expandNode function in order to add random expansion order
 void DepthFirstSearch::expandNode() {
 	currentNode.state.checkMoves();
+	output.nodesExpanded++;
 	int off = rand() % 4;
 	for (int i = 0; i < 4; i++) {
 		if (currentNode.state.validMoves[(i+off)%4]) {
