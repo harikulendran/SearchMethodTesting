@@ -43,7 +43,7 @@ template <template<typename...> class Container> void TreeSearch<Container>::pus
 		if (SAVE_IMAGES)
 			boardDrawer.draw(searchName, n.state, nodeIndex);
 		if (PRINT_TO_CONSOLE)
-			printDir(i);
+			printDir(n.dir);
 	}
 	output.maxNodesInMemory = (output.maxNodesInMemory > fringe.size()) ? output.maxNodesInMemory : fringe.size();
 }
