@@ -9,11 +9,10 @@
 #include <string>
 #include <chrono>
 
-
 using namespace std;
 
-void record(string name, string* outputString, SearchOutput output, int i=1) {
-		*outputString += "DFS," + to_string(i + 1) + "," + to_string(output.solnDepth) + ","
+void record(string name, string* outputString, SearchOutput output, int i=0, int j=0) {
+		*outputString += name + " " + to_string(i + 1) + "," + to_string(j) + "," + to_string(output.solnDepth) + ","
 			+ to_string(output.nodesInMemory) + "," + to_string(output.maxNodesInMemory) + ","
 			+ to_string(output.nodesExpanded) + "\n";
 }
@@ -27,28 +26,38 @@ int main() {
 	ofstream outputFile;
 	outputFile.open("DATA/outputFile.csv", ios::out | ios::app);
 	if (!start)
-		outputFile << "NO,Solution Depth,Nodes In Memory,Max Nodes in Memory,Nodes Expanded\n";
+		outputFile << "NO,Problem Difficulty,Solution Depth,Nodes In Memory,Max Nodes in Memory,Nodes Expanded\n";
 
 	string outputString = "";
 
-	for (int i = 0; i < testno; i++) {
-		DepthFirstSearch d{ i + 1 };
-		output = d.search();
-		record(d.searchName, &outputString, output, i);
+
+	//allows you to make changes to the board state before running
+	BlocksWorldBoard sB{};
+	//adding an 'x' for example adds an immovable block
+	//sB.board[2][2] = 'x';
+
+
+	for (int j = 0; j < testno; j++) {
+		//IterativeDeepeningSearch ids{sB};
+		//output = ids.search();
+		//record(ids.searchName, &outputString, output,0,j);
+
+		//BreadthFirstSearch b{sB};
+		//output = b.search();
+		//record(b.searchName, &outputString, output,0,j);
+		int q = 0;
+		while (output.solnDepth > 19) {
+			DepthFirstSearch d{ q++,sB };
+			output = d.search();
+			record(d.searchName, &outputString, output, 0, j);
+		}
+
+		//AStar a{sB};
+		//output = a.search();
+		//record(a.searchName, &outputString, output,0,j);
+		
+		cout << j << " DONE\n";
 	}
-
-	//BreadthFirstSearch b{};
-	//output = b.search();
-	//record(b.searchName, &outputString, output);
-
-	//AStar a{};
-	//output = a.search();
-	//record(a.searchName, &outputString, output);
-
-	//IterativeDeepeningSearch ids{};
-	//output = ids.search(40);
-	//record(ids.searchName, &outputString, output);
-
 
 	outputFile << outputString;
 	outputFile << "\n";

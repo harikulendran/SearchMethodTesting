@@ -43,10 +43,11 @@ class BlocksWorldBoard {
 
 	public:
 		bool isSolved();
+		void setBoard(BlocksWorldBoard* other);
 		void checkMoves();
 		void move(Direction dir);
 		void print();
 	
-	private:
+	public:
 		Coord agent{ BOARD_SIZE - 1,BOARD_SIZE - 1 };
 };

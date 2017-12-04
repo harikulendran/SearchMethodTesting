@@ -1,9 +1,9 @@
 #include "IterativeDeepeningSearch.h"
 
 //Sets the search name for use in image IO operations
-IterativeDeepeningSearch::IterativeDeepeningSearch() {
+IterativeDeepeningSearch::IterativeDeepeningSearch(BlocksWorldBoard start) : TreeSearch(start), startBoard(start) {
 	searchName = "IDS";
-	push(NodeState{ 0,-1,BlocksWorldBoard{} });
+	push(NodeState{ 0,-1,start });
 }
 
 //Uses a stack
@@ -15,7 +15,7 @@ NodeState IterativeDeepeningSearch::top() {
 SearchOutput IterativeDeepeningSearch::search(int maxDepth) {
 	for (int i = 0; i < maxDepth; i++) {
 		if (fringe.size() == 0) {
-			push(NodeState{ 0,-1,BlocksWorldBoard{} });
+			push(NodeState{ 0,-1,startBoard });
 		}
 		TreeSearch::search(i);
 		if (complete)

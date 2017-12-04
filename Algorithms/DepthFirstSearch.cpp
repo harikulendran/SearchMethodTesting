@@ -4,12 +4,12 @@
 #include <climits>
 
 //sets search name and initialises random number generator
-DepthFirstSearch::DepthFirstSearch(int i) {
+DepthFirstSearch::DepthFirstSearch(int i, BlocksWorldBoard start) : TreeSearch(start) {
 	//as the search runs ~9ms, time alone is not enough to act as a random
 	//seed for concurrent runs
 	srand(time(NULL) + i);
 	searchName = "DFS";
-	push(NodeState{ 0,-1,BlocksWorldBoard{} });
+	push(NodeState{ 0,-1,start });
 }
 
 //uses a stack
@@ -20,6 +20,7 @@ NodeState DepthFirstSearch::top() {
 //DFS overrides the expandNode function in order to add random expansion order
 void DepthFirstSearch::expandNode() {
 	currentNode.state.checkMoves();
+	freq[currentNode.state.agent.x][currentNode.state.agent.y]++;
 	output.nodesExpanded++;
 	int off = rand() % 4;
 	for (int i = 0; i < 4; i++) {

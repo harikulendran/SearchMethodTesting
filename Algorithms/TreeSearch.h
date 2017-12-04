@@ -8,7 +8,7 @@ template<template<typename...> class Container> class TreeSearch {
 	public:
 		string searchName = "TreeSearch";
 		SearchOutput output{};
-		BoardDrawer boardDrawer{};
+		BoardDrawer boardDrawer;
 		NodeState currentNode;
 		int nodeIndex = 0;
 		bool complete = false;
@@ -16,7 +16,7 @@ template<template<typename...> class Container> class TreeSearch {
 		map<int, SolnNode> solnStore{};
 
 	public:
-		TreeSearch();
+		TreeSearch(BlocksWorldBoard start);
 
 	public:
 		virtual SearchOutput search(int maxDepth = INT32_MAX);
@@ -29,6 +29,7 @@ template<template<typename...> class Container> class TreeSearch {
 		virtual NodeState top() = 0;
 		void push(NodeState n);
 		virtual void calculateF(NodeState* ns);
+		int freq[BOARD_SIZE][BOARD_SIZE] = { 0 };
 		
 	private:
 		void printSoln();
@@ -39,25 +40,26 @@ template <template<typename...> class Container> void TreeSearch<Container>::pus
 	fringe.push(n);
 	if (STORE_SOLUTION)
 		solnStore.emplace(nodeIndex, SolnNode{n.dir,n.parentNode});
-	if (output.nodesExpanded < 41 && SHOW_ADDITION_ORDER) {
+	if (output.nodesExpanded < 45 && SHOW_ADDITION_ORDER) {
 		if (SAVE_IMAGES)
 			boardDrawer.draw(searchName, n.state, nodeIndex);
-		if (PRINT_TO_CONSOLE)
-			printDir(i);
+		if (PRINT_ADD_TO_CONSOLE)
+			printDir(n.dir);
 	}
 	output.maxNodesInMemory = (output.maxNodesInMemory > fringe.size()) ? output.maxNodesInMemory : fringe.size();
 }
 
 //Constructor simply adds the root node
-template <template<typename...> class Container> TreeSearch<Container>::TreeSearch() {
-}
+template <template<typename...> class Container> TreeSearch<Container>::TreeSearch(BlocksWorldBoard start) : boardDrawer(BoardDrawer(start)) {}
 
 //Main tree search code
 template <template<typename...> class Container> SearchOutput TreeSearch<Container>::search(int maxDepth) {
-	//boardDrawer.draw(searchName, BlocksWorldBoard{}, 0);
+	//boardDrawer.draw(searchName, blocksworldboard{}, 0);
 	while (fringe.size() != 0) {
 		currentNode = top();
 		fringe.pop();
+
+		//prints the nodes expanded
 		if (output.nodesExpanded < 100 && SHOW_EXPANSION_ORDER) {
 			printDir(currentNode.dir);
 		}
@@ -77,6 +79,20 @@ template <template<typename...> class Container> SearchOutput TreeSearch<Contain
 		if (currentNode.depth < maxDepth)
 			expandNode();
 	}
+
+
+	//print and save image of heat map
+	if (DRAW_HEATMAP) {
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				cout << freq[j][i] << " ";
+			}
+			cout << endl;
+		}
+		BoardDrawer vc{ BlocksWorldBoard{} };
+		vc.drawHeatMap(searchName, freq);
+	}
+
 	return output;
 }
 
@@ -93,6 +109,9 @@ template <template<typename...> class Container> void TreeSearch<Container>::goa
 template <template<typename...> class Container> void TreeSearch<Container>::expandNode() {
 	currentNode.state.checkMoves();
 	output.nodesExpanded++;
+
+	freq[currentNode.state.agent.x][currentNode.state.agent.y]++;
+
 	for (int i = 0; i < 4; i++) {
 		if (currentNode.state.validMoves[i]) {
 			BlocksWorldBoard newBoard = BlocksWorldBoard(currentNode.state);
@@ -101,8 +120,6 @@ template <template<typename...> class Container> void TreeSearch<Container>::exp
 			newNode.dir = i;
 			calculateF(&newNode);
 			push(newNode);
-
-			//recordExpansion(i,newBoard);
 		}
 	}
 }
@@ -123,11 +140,15 @@ template <template<typename...> class Container> void TreeSearch<Container>::pri
 		index = solnStore[index].parentNode;
 	}
 
-	if (PRINT_TO_CONSOLE) {
-		for (int i = size - 1; i >= 0; i--)
+	if (PRINT_TO_CONSOLE && size <20) {
+		BlocksWorldBoard vs{};
+		for (int i = size - 1; i >= 0; i--) {
+			boardDrawer.draw("soln", vs, i);
+			vs.move(static_cast<Direction>(soln[i]));
 			printDir(soln[i]);
-		cout << "\n";
-	} else {
+		}
+		cout << "asdf\n";
+	} else if (size < 20) {
 		boardDrawer.displaySoln(soln,size);
 	}
 

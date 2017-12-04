@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 struct LessThanByHeuristic {
 	public:
 		bool operator()(const NodeState lhs, const NodeState rhs) const;
@@ -15,7 +14,7 @@ template<class Container> class my_pq : public priority_queue<NodeState, vector<
 
 class AStar : public TreeSearch<my_pq> {
 	public:
-		AStar();
+		AStar(BlocksWorldBoard start = BlocksWorldBoard{});
 		void calculateF(NodeState* ns);
 		int calculateH(Coord(&pieces)[NO_OF_PIECES]);
 		void getCoords(NodeState* ns, Coord(&pieces)[NO_OF_PIECES]);

@@ -1,7 +1,7 @@
 #include "BoardDrawer.h"
 #include <sstream>
 
-BoardDrawer::BoardDrawer() {
+BoardDrawer::BoardDrawer(BlocksWorldBoard start) : startBoard(start) {
 	//draw(BlocksWorldBoard{});
 	//showBoard();
 }
@@ -17,17 +17,16 @@ void BoardDrawer::draw(string name, BlocksWorldBoard board, int i) {
 
 void BoardDrawer::displaySoln(int* soln, int size) {
 	CImgDisplay main(image, "Solution", 255);
-	BlocksWorldBoard board{};
 	int backIndex = 0;
-	drawBoard(board);
-	draw("soln", board, backIndex++);
+	drawBoard(startBoard);
+	draw("soln", startBoard, backIndex++);
 	image.display(main);
 	for (int i = size - 1; i >= 0; i--) {
 		cimg::wait(700);
 		cout << soln[i] << " ";
-		board.move(static_cast<Direction>(soln[i]));
-		drawBoard(board);
-		draw("soln", board, backIndex++);
+		startBoard.move(static_cast<Direction>(soln[i]));
+		drawBoard(startBoard);
+		draw("soln", startBoard, backIndex++);
 		image.display(main);
 	}
 	while (!main.is_closed()) {
@@ -51,7 +50,36 @@ void BoardDrawer::drawPiece(int x, int y, char c) {
 	float xo = image.width() / (float)BOARD_SIZE;
 	float yo = image.height() / (float)BOARD_SIZE;
 	unsigned char green[] = { 214, 255, 214 };
-	unsigned char* col = (c == 'a') ? green : shadeCol;
+	unsigned char* col = (c == 'a') ? green : (c == 'x') ? fadeRed : shadeCol;
+	image.draw_rectangle(x*xo, y*yo, (x+1)*xo, (y+1)*yo, col, 1);
+	const char cs[] = { c,0 };
+	image.draw_text(x*xo + xo/2.0f - 18.0, y*yo + yo/2.0f - 30.0, cs, red, 0, 1.0f, 60);
+}
+
+void BoardDrawer::drawHeatMap(string name, int (&board)[BOARD_SIZE][BOARD_SIZE]) {
+	image = CImg<unsigned char>{ x_dim,y_dim,1,3,255 };
+	double total = 0;
+	for (int j = 0; j < BOARD_SIZE; j++)
+		for (int i = 0; i < BOARD_SIZE; i++)
+			total += board[i][j];
+	cout << total << "\n";
+	for (int j = 0; j < BOARD_SIZE; j++)
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			double val = (double)board[i][j] / total;
+			drawHPiece(i, j, val);
+		}
+	drawGrid();
+	std:ostringstream path;
+	path << "img/" + name + "HM.bmp";
+	string tstr = path.str();
+	image.save(tstr.c_str());
+}
+
+void BoardDrawer::drawHPiece(int x, int y, double c) {
+	unsigned char red[] = { 255,0,0 };
+	float xo = image.width() / (float)BOARD_SIZE;
+	float yo = image.height() / (float)BOARD_SIZE;
+	unsigned char col[] = { (int)(3*c*255), 0, 0 };
 	image.draw_rectangle(x*xo, y*yo, (x+1)*xo, (y+1)*yo, col, 1);
 	const char cs[] = { c,0 };
 	image.draw_text(x*xo + xo/2.0f - 18.0, y*yo + yo/2.0f - 30.0, cs, red, 0, 1.0f, 60);

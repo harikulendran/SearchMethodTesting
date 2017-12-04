@@ -7,9 +7,9 @@ bool LessThanByHeuristic::operator()(const NodeState lhs, const NodeState rhs) c
 }
 
 //set the search name
-AStar::AStar() {
+AStar::AStar(BlocksWorldBoard start) : TreeSearch(start) {
 	searchName = "AStar";
-	push(NodeState{ 0,-1,BlocksWorldBoard{} });
+	push(NodeState{ 0,-1,start });
 }
 
 //uses a priority queue

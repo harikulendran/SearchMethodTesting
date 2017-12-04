@@ -12,11 +12,17 @@ BlocksWorldBoard::BlocksWorldBoard() {
 	//add the pieces in the start state
 	for (int i = 0; i < NO_OF_PIECES; i++)
 		board[i][BOARD_SIZE - 1] = goals[i];
-	//board[0][4] = 'A';
-	//board[1][4] = 'B';
-	//board[2][4] = 'C';
+
 	//add the agent
-	board[BOARD_SIZE - 1][BOARD_SIZE - 1] = 'a';
+	agent.x = BOARD_SIZE - 1;
+	agent.y = BOARD_SIZE - 1;
+	board[agent.x][agent.y] = 'a';
+}
+
+void BlocksWorldBoard::setBoard(BlocksWorldBoard* other) {
+	for (int i = 0; i < BOARD_SIZE; i++)
+		for (int j = 0; j < BOARD_SIZE; j++)
+			board[i][j] = other->board[i][j];
 }
 
 //checks if the current board is the goal state
@@ -32,10 +38,10 @@ bool BlocksWorldBoard::isSolved() {
 
 //fills the list of valid moves for the agent in its current position
 void BlocksWorldBoard::checkMoves() {
-	validMoves[static_cast<int>(Direction::RIGHT)] = (agent.x != BOARD_SIZE - 1);
-	validMoves[static_cast<int>(Direction::LEFT)] = (agent.x != 0);
-	validMoves[static_cast<int>(Direction::DOWN)] = (agent.y != BOARD_SIZE - 1);
-	validMoves[static_cast<int>(Direction::UP)] = (agent.y != 0);
+	validMoves[static_cast<int>(Direction::RIGHT)] = (agent.x != BOARD_SIZE - 1) && (board[agent.x+1][agent.y] != 'x');
+	validMoves[static_cast<int>(Direction::LEFT)] = (agent.x != 0) && (board[agent.x-1][agent.y] != 'x');
+	validMoves[static_cast<int>(Direction::DOWN)] = (agent.y != BOARD_SIZE - 1) && (board[agent.x][agent.y+1] != 'x');
+	validMoves[static_cast<int>(Direction::UP)] = (agent.y != 0) && (board[agent.x+1][agent.y-1] != 'x');
 }
 
 //links each Direction to a unit coordinate
